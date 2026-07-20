@@ -1,0 +1,6 @@
+# Ignore HTML templates from language statistics
+src/main/resources/templates/**/*.html linguist-detectable=false
+src/main/resources/static/**/* linguist-detectable=false
+
+# Explicitly mark Java as the primary language
+*.java linguist-detectable=true

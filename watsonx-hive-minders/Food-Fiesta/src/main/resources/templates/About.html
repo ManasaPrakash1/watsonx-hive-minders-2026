@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Food Fiesta</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <nav th:replace="~{Navigation::navbar()}"></nav>
+
+    <main class="section-padding">
+        <div class="container">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto 100px;">
+                <span style="letter-spacing: 0.2em; font-weight: 800; color: var(--primary); font-size: 0.75rem; text-transform: uppercase;">Our Story</span>
+                <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin: 16px 0 24px;">Born from a passion for <span style="color: var(--primary);">Authenticity</span>.</h1>
+                <p style="font-size: 1.25rem; color: var(--on-surface-variant);">
+                    Founded in 2024, Food Fiesta was built on the belief that fine dining should be accessible, exciting, and absolutely delicious. We bridge the gap between world-class kitchens and your doorstep.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 64px; align-items: center;">
+                <div class="animate-up">
+                    <img th:src="@{/Images/istockphoto-1006271368-612x612.jpg}" alt="Kitchen" style="width: 100%; border-radius: 40px; box-shadow: var(--shadow-lg);">
+                </div>
+                <div class="animate-up" style="animation-delay: 0.2s;">
+                    <div style="display: flex; flex-direction: column; gap: 32px;">
+                        <div class="card-glass" style="border-left: 6px solid var(--primary);">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 12px;">The Vision</h3>
+                            <p style="color: var(--on-surface-variant);">To be the global benchmark for gourmet delivery, celebrated for our uncompromising quality and culinary transparency.</p>
+                        </div>
+                        <div class="card-glass" style="border-left: 6px solid var(--primary-light);">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 12px;">The Mission</h3>
+                            <p style="color: var(--on-surface-variant);">Connecting communities through the universal language of great food, while supporting sustainable local farming and expert craftsmanship.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: 60px 5%; text-align: center; border-top: 1px solid var(--outline); font-size: 0.875rem; color: var(--on-surface-variant);">
+        &copy; 2026 Food Fiesta. Crafted with uncompromising standards.
+    </footer>
+</body>
+
+</html>

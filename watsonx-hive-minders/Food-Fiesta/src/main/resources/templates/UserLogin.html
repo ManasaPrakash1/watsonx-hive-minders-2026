@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>User Login | Food Fiesta</title>
+	<link rel="stylesheet" th:href="@{/css/main.css}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+	<nav th:replace="~{Navigation::navbar()}"></nav>
+
+	<div class="auth-wrapper">
+		<div class="auth-card animate-up">
+			<div style="margin-bottom: 32px; text-align: center;">
+				<div style="width: 56px; height: 56px; background: var(--primary-container); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+					<i class="fa-solid fa-user-lock" style="font-size: 1.5rem; color: var(--primary);"></i>
+				</div>
+				<h2 style="font-size: 1.75rem; margin-bottom: 8px;">User Login</h2>
+				<p style="font-size: 0.875rem; color: var(--on-surface-variant);">Welcome back! Please sign in to your accounts</p>
+			</div>
+
+			<form th:action="@{/userLogin}" method="post">
+				<div style="margin-bottom: 20px;">
+					<label style="font-size: 0.875rem; font-weight: 700;">Email Address</label>
+					<input type="email" name="userEmail" placeholder="you@example.com" class="input-field" required>
+				</div>
+				<div style="margin-bottom: 24px;">
+					<label style="font-size: 0.875rem; font-weight: 700;">Password</label>
+					<input type="password" name="userPassword" placeholder="••••••••" class="input-field" required>
+				</div>
+				
+				<p th:if="${error2}" th:text="${error2}" style="color: var(--primary); font-size: 0.875rem; margin-bottom: 16px; text-align: center;"></p>
+				
+				<button type="submit" class="btn btn-primary" style="width: 100%; padding: 16px;">Access Menu <i class="fa-solid fa-arrow-right"></i></button>
+			</form>
+			
+			<div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--outline); text-align: center;">
+				<p style="font-size: 0.875rem; color: var(--on-surface-variant);">
+					Don't have an account? <a th:href="@{/register}" style="color: var(--primary); font-weight: 800; text-decoration: none;">Join the movement</a>
+				</p>
+				<p style="font-size: 0.875rem; color: var(--on-surface-variant); margin-top: 12px;">
+					Are you an admin? <a th:href="@{/login}" style="color: var(--on-surface); font-weight: 600; text-decoration: none;">Access Dashboard</a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<footer style="padding: 40px; text-align: center; color: var(--on-surface-variant); font-size: 0.875rem;">
+		&copy; 2026 Food Fiesta. Secured for your privacy.
+	</footer>
+</body>
+</html>

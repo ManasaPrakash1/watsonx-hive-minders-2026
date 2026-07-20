@@ -1,0 +1,282 @@
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Audit Dette Technique — Food Fiesta</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,system-ui,sans-serif;font-size:13px;color:#1a1a1a;background:#f5f5f5;padding:24px}
+.header{background:linear-gradient(135deg,#1b5e20,#2e7d32);color:#fff;border-radius:10px;padding:28px 32px;margin-bottom:24px}
+.header h1{font-size:22px;font-weight:800;margin-bottom:4px}
+.header p{opacity:.85;font-size:13px}
+.header .badge{display:inline-block;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:12px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.kpi{background:#fff;border-radius:8px;padding:18px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center}
+.kpi .val{font-size:28px;font-weight:800;line-height:1.1}
+.kpi .lbl{font-size:11px;color:#666;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+.kpi .delta{font-size:11px;margin-top:6px;font-weight:600}
+.kpi.red .val{color:#c62828}
+.kpi.orange .val{color:#e65100}
+.kpi.green .val{color:#2e7d32}
+.kpi.blue .val{color:#1565c0}
+.delta-pos{color:#c62828} .delta-neg{color:#2e7d32} .delta-zero{color:#888}
+.chart-card{background:#fff;border-radius:8px;padding:20px 24px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:24px}
+.chart-card h2{font-size:14px;font-weight:700;color:#333;margin-bottom:16px}
+.bar-row{display:flex;align-items:center;margin-bottom:10px}
+.bar-label{width:110px;font-size:12px;color:#555;text-align:right;padding-right:12px;flex-shrink:0}
+.bar-track{flex:1;background:#f0f0f0;border-radius:4px;height:22px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;color:#fff;font-weight:700}
+.bar-days{width:60px;text-align:right;font-size:12px;color:#333;padding-left:8px;font-weight:600}
+section{background:#fff;border-radius:8px;padding:20px 24px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:20px}
+section h2{font-size:15px;font-weight:700;margin-bottom:14px;color:#1b5e20;border-bottom:2px solid #e8f5e9;padding-bottom:8px}
+.alert{border-radius:6px;padding:10px 14px;margin-bottom:8px;font-size:12.5px}
+.alert .tag{display:inline-block;font-weight:800;font-size:10px;padding:2px 8px;border-radius:10px;margin-right:8px;text-transform:uppercase;letter-spacing:.5px}
+.critique{background:#ffebee;border-left:4px solid #c62828}.critique .tag{background:#c62828;color:#fff}
+.urgent{background:#fff3e0;border-left:4px solid #e65100}.urgent .tag{background:#e65100;color:#fff}
+.attention{background:#fffde7;border-left:4px solid #f9a825}.attention .tag{background:#f9a825;color:#333}
+.resolu{background:#e8f5e9;border-left:4px solid #2e7d32}.resolu .tag{background:#2e7d32;color:#fff}
+.narrative{font-size:11.5px;color:#555;margin-top:5px;line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:#e8f5e9;color:#1b5e20;font-weight:700;text-align:left;padding:8px 10px;border:1px solid #c8e6c9}
+td{padding:7px 10px;border:1px solid #e0e0e0;vertical-align:top}
+tr:nth-child(even) td{background:#fafafa}
+.sev-critique{color:#c62828;font-weight:700} .sev-high{color:#e65100;font-weight:700} .sev-medium{color:#f9a825;font-weight:700} .sev-low{color:#888}
+.backlog-item{background:#fafafa;border:1px solid #e0e0e0;border-radius:6px;padding:14px 16px;margin-bottom:10px}
+.backlog-item .rank{display:inline-block;background:#1b5e20;color:#fff;font-size:11px;font-weight:800;padding:2px 9px;border-radius:10px;margin-right:8px}
+.backlog-item .title{font-weight:700;font-size:13px}
+.backlog-item .meta{font-size:11.5px;color:#666;margin:5px 0;display:flex;gap:18px}
+.backlog-item .meta span{background:#e8f5e9;padding:2px 8px;border-radius:4px;font-weight:600}
+.backlog-item .detail{font-size:12px;color:#444;line-height:1.5;margin-top:6px}
+.backlog-item .files{font-size:11px;color:#1565c0;margin-top:4px;font-family:monospace}
+.delta-banner{background:#e3f2fd;border-left:4px solid #1565c0;border-radius:0 6px 6px 0;padding:12px 16px;margin-bottom:20px;font-size:12.5px}
+.stable{color:#888;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Audit v3.0 — 2025-07-16</div>
+  <h1>🍽️ Food Fiesta — Rapport de Dette Technique</h1>
+  <p>Food Fiesta (com.example.demo) — Spring Boot 3.4.2 / Java 21  ·  Taux journalier : 550 €/j</p>
+</div>
+
+
+<div class="kpis">
+  <div class="kpi red">
+    <div class="val">37.6j</div>
+    <div class="lbl">Dette totale</div>
+    <div class="delta delta-zero">↔ stable vs v2.0</div>
+  </div>
+  <div class="kpi red">
+    <div class="val">20 680€</div>
+    <div class="lbl">Coût estimé</div>
+    <div class="delta delta-zero">↔ stable vs v2.0</div>
+  </div>
+  <div class="kpi red">
+    <div class="val">3</div>
+    <div class="lbl">Findings critiques</div>
+    <div class="delta delta-zero">↔ stable vs v2.0</div>
+  </div>
+  <div class="kpi orange">
+    <div class="val">33%</div>
+    <div class="lbl">Couverture tests</div>
+    <div class="delta delta-zero">↔ stable vs v2.0</div>
+  </div>
+</div>
+
+
+<div class="delta-banner">
+  <strong>📊 Évolution temporelle vs baseline v2.0 (2025-07-16)</strong><br />
+  <span class="stable">Aucune modification détectée depuis le dernier audit — dette stable à 37.6j / 20 680€.</span>
+  Les alertes critiques identifiées précédemment restent ouvertes. Aucune régression, aucune amélioration.
+</div>
+
+
+<div class="chart-card">
+  <h2>📊 Répartition de la dette par catégorie</h2>
+  <div class="bar-row"><div class="bar-label">Sécurité</div><div class="bar-track"><div class="bar-fill" style="width:53.2%;background:#c62828">53%</div></div><div class="bar-days">20.0j</div></div>
+  <div class="bar-row"><div class="bar-label">Architecture</div><div class="bar-track"><div class="bar-fill" style="width:19.1%;background:#e65100">19%</div></div><div class="bar-days">7.2j</div></div>
+  <div class="bar-row"><div class="bar-label">Tests</div><div class="bar-track"><div class="bar-fill" style="width:13.3%;background:#f9a825">13%</div></div><div class="bar-days">5.0j</div></div>
+  <div class="bar-row"><div class="bar-label">Ops</div><div class="bar-track"><div class="bar-fill" style="width:8.5%;background:#1565c0">9%</div></div><div class="bar-days">3.2j</div></div>
+  <div class="bar-row"><div class="bar-label">Qualité</div><div class="bar-track"><div class="bar-fill" style="width:5.9%;background:#555">6%</div></div><div class="bar-days">2.2j</div></div>
+</div>
+
+
+<section>
+  <h2>🚨 Alertes actives</h2>
+
+  <div class="alert critique">
+    <span class="tag">Critique</span><strong>Mots de passe stockés et comparés en clair</strong>
+    <div class="narrative">Les mots de passe des utilisateurs et des administrateurs sont stockés en base de données sans aucun hachage, et comparés directement en texte clair lors de la connexion. En cas de fuite de la base de données — même accidentelle — l'ensemble des comptes utilisateurs est immédiatement compromis. Le bean <code>BCryptPasswordEncoder</code> est déjà déclaré dans le code mais n'est jamais utilisé : le correctif est à portée de main.</div>
+  </div>
+
+  <div class="alert critique">
+    <span class="tag">Critique</span><strong>Mot de passe admin codé en dur dans le code source</strong>
+    <div class="narrative">Le mot de passe <code>admin123</code> est écrit en clair dans le fichier <code>DataLoader.java</code>, versionné dans Git. Toute personne ayant accès au dépôt — y compris d'anciens collaborateurs — connaît les credentials d'administration de production. Ce type de secret ne doit jamais apparaître dans le code source.</div>
+  </div>
+
+  <div class="alert critique">
+    <span class="tag">Critique</span><strong>Console H2 exposée publiquement sans authentification</strong>
+    <div class="narrative">La console d'administration de la base de données H2 est accessible à n'importe qui sur l'URL <code>/h2-console</code> sans aucune restriction d'accès. En environnement de développement c'est acceptable, mais si cette configuration est déployée en production, un attaquant peut lire, modifier ou supprimer l'intégralité des données de l'application.</div>
+  </div>
+
+  <div class="alert urgent">
+    <span class="tag">Urgent</span><strong>9 mutations d'état via HTTP GET</strong>
+    <div class="narrative">Neuf opérations de modification ou suppression de données (utilisateurs, produits, admins) sont exposées via des requêtes GET au lieu de POST/PUT/DELETE. Cela signifie qu'un simple lien dans un email ou une image dans une page web peut déclencher une suppression de données à l'insu de l'utilisateur (attaque CSRF par GET), même si le CSRF est par ailleurs désactivé.</div>
+  </div>
+
+  <div class="alert urgent">
+    <span class="tag">Urgent</span><strong>Placeholders OAuth2 non remplacés dans application.properties</strong>
+    <div class="narrative">Les valeurs <code>YOUR_CLIENT_ID</code> et <code>YOUR_CLIENT_SECRET</code> sont versionnées dans <code>application.properties</code>. Si ce fichier est déployé tel quel, la configuration OAuth2 est non fonctionnelle. De plus, ce pattern encourage les développeurs à mettre de vrais secrets dans ce fichier, qui est tracké par Git.</div>
+  </div>
+
+  <div class="alert attention">
+    <span class="tag">Attention</span><strong>Couverture de tests à 33% — cible 80% non atteinte</strong>
+    <div class="narrative">Seul un tiers du code est couvert par des tests automatisés. Les modules les plus risqués (authentification, gestion des commandes, logique de prix) ne sont pas testés. Tout refactoring dans ces zones est réalisé à l'aveugle, avec un risque élevé de régression silencieuse.</div>
+  </div>
+
+  <div class="alert attention">
+    <span class="tag">Attention</span><strong>Aucune transaction explicite (@Transactional)</strong>
+    <div class="narrative">Aucune méthode de service n'est annotée <code>@Transactional</code>. Les opérations impliquant plusieurs sauvegardes successives peuvent laisser la base dans un état incohérent si une erreur survient entre deux appels à <code>save()</code>.</div>
+  </div>
+
+  <div class="alert resolu">
+    <span class="tag">Résolu</span><strong>Couverture tests &lt; 20% (v1.0 → v2.0)</strong>
+    <div class="narrative">La couverture est passée de 4% à 33% entre la v1.0 et la v2.0 grâce à l'ajout de 8 fichiers de test et 62 tests. Cette amélioration est maintenue en v3.0.</div>
+  </div>
+</section>
+
+
+<section>
+  <h2>🎯 Backlog priorisé — Top 10 actions</h2>
+
+  <div class="backlog-item">
+    <span class="rank">#1</span><span class="title sev-critique">[CRITIQUE] Activer le hachage des mots de passe</span>
+    <div class="meta"><span>Effort : 1j</span><span>Économie de dette : 8j</span><span>ROI : 8×</span></div>
+    <div class="files">UserServices.java · AdminServices.java · SecurityConfig.java · DataLoader.java</div>
+    <div class="detail">Le bean <code>BCryptPasswordEncoder</code> est déjà déclaré dans <code>SecurityConfig</code>. Il suffit de l'injecter dans <code>UserServices</code> et <code>AdminServices</code>, d'encoder les mots de passe à la création (<code>addUser</code>, <code>addAdmin</code>) et d'utiliser <code>passwordEncoder.matches()</code> à la place de <code>.equals()</code> lors de la validation. Mettre à jour <code>DataLoader</code> pour encoder le mot de passe admin par défaut.</div>
+  </div>
+
+  <div class="backlog-item">
+    <span class="rank">#2</span><span class="title sev-critique">[CRITIQUE] Externaliser les secrets hors du code source</span>
+    <div class="meta"><span>Effort : 0.5j</span><span>Économie de dette : 5j</span><span>ROI : 10×</span></div>
+    <div class="files">DataLoader.java · application.properties</div>
+    <div class="detail">Remplacer <code>"admin123"</code> dans <code>DataLoader.java</code> par une variable d'environnement (<code>@Value("${admin.default.password}")</code>). Déplacer les credentials OAuth2 dans un fichier <code>application-local.properties</code> exclu du Git (<code>.gitignore</code>).</div>
+  </div>
+
+  <div class="backlog-item">
+    <span class="rank">#3</span><span class="title sev-critique">[CRITIQUE] Restreindre l'accès à la console H2</span>
+    <div class="meta"><span>Effort : 0.5j</span><span>Économie de dette : 3j</span><span>ROI : 6×</span></div>
+    <div class="files">SecurityConfig.java · application.properties</div>
+    <div class="detail">Conditionner l'accès à <code>/h2-console/**</code> au profil Spring <code>dev</code> uniquement via <code>@Profile("dev")</code> sur le bean de configuration, ou désactiver <code>spring.h2.console.enabled</code> dans les profils <code>prod</code> et <code>staging</code>.</div>
+  </div>
+
+  <div class="backlog-item">
+    <span class="rank">#4</span><span class="title" style="color:#e65100">[URGENT] Remplacer les GET de mutation par POST/DELETE</span>
+    <div class="meta"><span>Effort : 2j</span><span>Économie de dette : 4j</span><span>ROI : 2×</span></div>
+    <div class="files">AdminController.java · UserController.java · ProductController.java</div>
+    <div class="detail">Convertir les 9 endpoints <code>@GetMapping("/updating*")</code> et <code>@GetMapping("/delete*")</code> en <code>@PostMapping</code> ou <code>@DeleteMapping</code> avec CSRF ré-activé. Mettre à jour les formulaires Thymeleaf correspondants avec <code>method="post"</code> et <code>th:action</code>.</div>
+  </div>
+
+  <div class="backlog-item">
+    <span class="rank">#5</span><span class="title" style="color:#e65100">[URGENT] Ajouter @Transactional sur les services</span>
+    <div class="meta"><span>Effort : 0.5j</span><span>Économie de dette : 2j</span><span>ROI : 4×</span></div>
+    <div class="files">UserServices.java · AdminServices.java · ProductServices.java · OrderServices.java</div>
+    <div class="detail">Annoter les méthodes de service qui font plusieurs opérations DB avec <code>@Transactional</code>. Marquer les méthodes en lecture seule avec <code>@Transactional(readOnly = true)</code> pour optimiser les performances.</div>
+  </div>
+
+  <div class="backlog-item">
+    <span class="rank">#6</span><span class="title" style="color:#f9a825">[ATTENTION] Remplacer la validation login user par une requête ciblée</span>
+    <div class="meta"><span>Effort : 0.5j</span><span>Économie de dette : 1.5j</span><span>ROI : 3×</span></div>
+    <div class="files">UserServices.java · UserRepository.java</div>
+    <div class="detail"><code>validateLoginCredentials()</code> charge tous les utilisateurs en mémoire pour comparer. Remplacer par <code>findUserByUemailAndUpassword(email, encodedPassword)</code> dans <code>UserRepository</code> après activation du hachage (#1).</div>
+  </div>
+
+  <div class="backlog-item">
+    <span class="rank">#7</span><span class="title" style="color:#f9a825">[ATTENTION] Augmenter la couverture de tests à 60%+</span>
+    <div class="meta"><span>Effort : 5j</span><span>Économie de dette : 5j</span><span>ROI : 1×</span></div>
+    <div class="files">UserServices.java · AdminController.java · OrderServices.java</div>
+    <div class="detail">Prioriser les tests sur les flux critiques : login admin/user, placement de commande, calcul du total. Utiliser <code>@SpringBootTest</code> + <code>MockMvc</code> pour les controllers et <code>@DataJpaTest</code> pour les repositories.</div>
+  </div>
+
+  <div class="backlog-item">
+    <span class="rank">#8</span><span class="title" style="color:#f9a825">[ATTENTION] Corriger le bug dans AdminServices.update()</span>
+    <div class="meta"><span>Effort : 0.5j</span><span>Économie de dette : 1j</span><span>ROI : 2×</span></div>
+    <div class="files">AdminServices.java</div>
+    <div class="detail">La méthode <code>update(Admin admin, int id)</code> itère les admins pour trouver l'ID correspondant mais n'appelle pas <code>admin.setAdminId(id)</code> avant <code>save(admin)</code>. L'admin mis à jour peut donc être créé avec un nouvel ID au lieu d'être mis à jour.</div>
+  </div>
+
+  <div class="backlog-item">
+    <span class="rank">#9</span><span class="title" style="color:#888">[QUALITÉ] Corriger OrderController (classe vide)</span>
+    <div class="meta"><span>Effort : 1j</span><span>Économie de dette : 0.5j</span><span>ROI : 0.5×</span></div>
+    <div class="files">OrderController.java · AdminController.java</div>
+    <div class="detail"><code>OrderController</code> est une classe vide décorée de plusieurs imports non utilisés. La logique des commandes est dispersée dans <code>AdminController</code>. Extraire les handlers de commande dans <code>OrderController</code> pour respecter le principe de responsabilité unique.</div>
+  </div>
+
+  <div class="backlog-item">
+    <span class="rank">#10</span><span class="title" style="color:#888">[QUALITÉ] Migrer CrudRepository vers JpaRepository</span>
+    <div class="meta"><span>Effort : 0.5j</span><span>Économie de dette : 0.5j</span><span>ROI : 1×</span></div>
+    <div class="files">UserRepository.java · AdminRepository.java · ProductRepository.java</div>
+    <div class="detail">Trois des quatre repositories étendent <code>CrudRepository</code> (qui retourne <code>Iterable</code>) au lieu de <code>JpaRepository</code> (qui retourne <code>List</code>). Cela force des casts explicites dans tous les services et bloque l'accès à la pagination et au tri.</div>
+  </div>
+</section>
+
+
+<section>
+  <h2>🔒 Détail des findings de sécurité</h2>
+  <table>
+    <tr><th>Fichier</th><th>Ligne</th><th>Règle</th><th>Sévérité</th><th>Description</th></tr>
+    <tr><td>UserServices.java</td><td>58</td><td>PLAIN_TEXT_PWD</td><td class="sev-critique">CRITIQUE</td><td>Comparaison mot de passe en clair via <code>.equals(password)</code></td></tr>
+    <tr><td>AdminServices.java</td><td>55</td><td>PLAIN_TEXT_PWD</td><td class="sev-critique">CRITIQUE</td><td>Comparaison mot de passe admin en clair via <code>.equals(password)</code></td></tr>
+    <tr><td>DataLoader.java</td><td>54</td><td>HARDCODED_SECRET</td><td class="sev-critique">CRITIQUE</td><td>Mot de passe <code>"admin123"</code> codé en dur dans le code source versionné</td></tr>
+    <tr><td>SecurityConfig.java</td><td>26</td><td>H2_CONSOLE_PUBLIC</td><td class="sev-high">HIGH</td><td>Console H2 accessible publiquement sans restriction de profil</td></tr>
+    <tr><td>SecurityConfig.java</td><td>21</td><td>CSRF_DISABLED</td><td class="sev-high">HIGH</td><td>CSRF désactivé globalement — aucune protection contre les attaques CSRF</td></tr>
+    <tr><td>AdminController.java</td><td>149–187</td><td>MUTATION_GET</td><td class="sev-high">HIGH</td><td>Opérations de mutation (update/delete) exposées via HTTP GET (9 endpoints)</td></tr>
+    <tr><td>application.properties</td><td>17–18</td><td>PLACEHOLDER_SECRET</td><td class="sev-high">HIGH</td><td>Placeholders OAuth2 <code>YOUR_CLIENT_ID</code>/<code>YOUR_CLIENT_SECRET</code> versionnés</td></tr>
+    <tr><td>OAuth2Controller.java</td><td>34</td><td>PLACEHOLDER_PWD</td><td class="sev-medium">MEDIUM</td><td>Mot de passe placeholder <code>"OAUTH_USER"</code> stocké en clair pour les comptes Google</td></tr>
+    <tr><td>UserServices.java</td><td>55–63</td><td>FULL_TABLE_SCAN</td><td class="sev-medium">MEDIUM</td><td>Validation login par scan complet de la table utilisateurs</td></tr>
+    <tr><td>AdminController.java</td><td>72–79</td><td>SESSION_EXPOSURE</td><td class="sev-medium">MEDIUM</td><td>Entité JPA <code>User</code> complète stockée en session HTTP</td></tr>
+  </table>
+</section>
+
+
+<section>
+  <h2>📦 Audit des dépendances</h2>
+  <table>
+    <tr><th>Dépendance</th><th>Version actuelle</th><th>Dernière connue</th><th>CVE potentiels</th><th>Effort upgrade</th></tr>
+    <tr><td>Spring Boot</td><td>3.4.2</td><td>3.4.x (récente)</td><td>Faible</td><td>Faible</td></tr>
+    <tr><td>Spring Security</td><td>via Boot 3.4.2</td><td>À jour</td><td>Faible</td><td>—</td></tr>
+    <tr><td>Hibernate / JPA</td><td>via Boot 3.4.2</td><td>À jour</td><td>Faible</td><td>—</td></tr>
+    <tr><td>H2 Database</td><td>runtime (Boot)</td><td>À jour</td><td>Faible (usage dev)</td><td>—</td></tr>
+    <tr><td>PostgreSQL JDBC</td><td>runtime (Boot)</td><td>À jour</td><td>Faible</td><td>—</td></tr>
+    <tr><td>SpringDoc OpenAPI</td><td>2.8.5</td><td>2.8.x</td><td>Faible</td><td>Faible</td></tr>
+    <tr><td>Spring OAuth2 Client</td><td>via Boot 3.4.2</td><td>À jour</td><td>Faible</td><td>—</td></tr>
+    <tr><td>eclipse-temurin (Docker)</td><td>21-alpine</td><td>21 LTS</td><td>Faible</td><td>Faible</td></tr>
+  </table>
+  <p style="margin-top:10px;font-size:12px;color:#666">✅ Le stack de dépendances est globalement à jour. Aucune CVE critique identifiée sur les versions déclarées.</p>
+</section>
+
+
+<section>
+  <h2>🏗️ Architecture &amp; Qualité</h2>
+  <table>
+    <tr><th>Fichier</th><th>Type</th><th>Problème</th><th>Sévérité</th></tr>
+    <tr><td>AdminController.java</td><td>God Class</td><td>Gère login admin, login user, dashboard, commandes, routing pages admin ET OAuth2 — 218 lignes, 12 méthodes</td><td class="sev-high">HIGH</td></tr>
+    <tr><td>OrderController.java</td><td>Dead Code</td><td>Classe vide avec imports inutilisés — la logique commandes est dans AdminController</td><td class="sev-medium">MEDIUM</td></tr>
+    <tr><td>AdminServices.java</td><td>Bug logique</td><td><code>update()</code> itère tous les admins mais n'appelle pas <code>setAdminId(id)</code> avant save</td><td class="sev-high">HIGH</td></tr>
+    <tr><td>UserServices.java</td><td>Anti-pattern</td><td><code>validateLoginCredentials()</code> charge toute la table en mémoire — O(n)</td><td class="sev-medium">MEDIUM</td></tr>
+    <tr><td>Services (*)</td><td>Convention</td><td>Tous les services utilisent <code>@Component</code> au lieu de <code>@Service</code></td><td class="sev-low">LOW</td></tr>
+    <tr><td>Orders.java</td><td>Naming</td><td>Champ <code>totalAmmout</code> — typo intentionnelle (double m) figée par JPA</td><td class="sev-low">LOW</td></tr>
+    <tr><td>Repositories (*)</td><td>Design</td><td>3 repositories sur 4 étendent <code>CrudRepository</code> au lieu de <code>JpaRepository</code></td><td class="sev-medium">MEDIUM</td></tr>
+    <tr><td>All services</td><td>Manque</td><td>Aucune annotation <code>@Transactional</code> — risque de partial commits</td><td class="sev-medium">MEDIUM</td></tr>
+  </table>
+</section>
+
+
+<section>
+  <h2>📋 Note méthodologique</h2>
+  <p style="line-height:1.7;color:#444">Cet audit a été réalisé par analyse statique manuelle du code source (grep, read_file) en mode fallback (Node.js non disponible). Le modèle de coût applique un taux journalier de <strong>550 €/j</strong>. La dette est calculée selon une grille standardisée : finding critique = 3j, finding high = 1.5j, finding medium = 0.5j, écart de couverture = 1j par tranche de 10% sous 80%, code smell = 0.3j/fichier. Les CVE sont évaluées qualitativement (pas de base NVD interrogée en temps réel). Pour re-lancer l'audit et mesurer l'évolution : tapez <strong>"lance un audit de dette technique"</strong> dans une nouvelle conversation Bob.</p>
+</section>
+
+</body>
+</html>

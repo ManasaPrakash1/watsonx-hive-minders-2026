@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login | Food Fiesta</title>
+	<link rel="stylesheet" th:href="@{/css/main.css}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+	<nav th:replace="~{Navigation::navbar()}"></nav>
+
+	<div class="auth-wrapper">
+		<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; width: 100%; max-width: 1000px;">
+			
+			<!-- Admin Login -->
+			<div class="auth-card animate-up">
+				<div style="margin-bottom: 32px; text-align: center;">
+					<div style="width: 48px; height: 48px; background: var(--primary-container); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+						<i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i>
+					</div>
+					<h2 style="font-size: 1.5rem; margin-bottom: 8px;">Admin Login</h2>
+					<p style="font-size: 0.875rem; color: var(--on-surface-variant);">Access the management dashboard</p>
+				</div>
+
+				<form th:action="@{/adminLogin}" method="post">
+					<div style="margin-bottom: 20px;">
+						<label style="font-size: 0.875rem; font-weight: 600;">Email Address</label>
+						<input type="email" name="email" placeholder="admin@foodfiesta.com" class="input-field" required>
+					</div>
+					<div style="margin-bottom: 24px;">
+						<label style="font-size: 0.875rem; font-weight: 600;">Password</label>
+						<input type="password" name="password" placeholder="••••••••" class="input-field" required>
+					</div>
+					<p th:if="${error}" th:text="${error}" style="color: var(--primary); font-size: 0.875rem; margin-bottom: 16px; text-align: center;"></p>
+					<button type="submit" class="btn btn-primary" style="width: 100%;">Enter Dashboard</button>
+				</form>
+			</div>
+
+			<!-- User Login -->
+			<div class="auth-card animate-up" style="animation-delay: 0.1s;">
+				<div style="margin-bottom: 32px; text-align: center;">
+					<div style="width: 48px; height: 48px; background: var(--primary-container); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+						<i class="fa-solid fa-user" style="color: var(--primary);"></i>
+					</div>
+					<h2 style="font-size: 1.5rem; margin-bottom: 8px;">User Login</h2>
+					<p style="font-size: 0.875rem; color: var(--on-surface-variant);">Welcome back, food lover!</p>
+				</div>
+
+				<form th:action="@{/userLogin}" method="post">
+					<div style="margin-bottom: 20px;">
+						<label style="font-size: 0.875rem; font-weight: 600;">Email Address</label>
+						<input type="email" name="userEmail" placeholder="you@example.com" class="input-field" required>
+					</div>
+					<div style="margin-bottom: 24px;">
+						<label style="font-size: 0.875rem; font-weight: 600;">Password</label>
+						<input type="password" name="userPassword" placeholder="••••••••" class="input-field" required>
+					</div>
+					<p th:if="${error2}" th:text="${error2}" style="color: var(--primary); font-size: 0.875rem; margin-bottom: 16px; text-align: center;"></p>
+					<button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+
+					<div style="margin: 20px 0; display: flex; align-items: center; color: var(--on-surface-variant); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+						<div style="flex: 1; height: 1px; background: var(--surface-variant);"></div>
+						<span style="padding: 0 12px;">Or continue with</span>
+						<div style="flex: 1; height: 1px; background: var(--surface-variant);"></div>
+					</div>
+
+					<a th:href="@{/oauth2/authorization/google}" class="btn" style="width: 100%; background: #ffffff; color: #1f1f1f; border: 1px solid #d1d1d1; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 600; transition: all 0.2s ease;">
+						<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="18" alt="Google Logo">
+						Google
+					</a>
+				</form>
+				<p style="margin-top: 24px; text-align: center; font-size: 0.875rem; color: var(--on-surface-variant);">
+					Don't have an account? <a th:href="@{/register}" style="color: var(--primary); font-weight: 700; text-decoration: none;">Create one now</a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<footer style="padding: 48px 5%; text-align: center; color: var(--on-surface-variant); font-size: 0.875rem;">
+		&copy; 2026 Food Fiesta. Protected by Secure Gateway.
+	</footer>
+</body>
+</html>

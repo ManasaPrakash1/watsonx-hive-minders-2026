@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Admin | Food Fiesta</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="auth-wrapper" style="background: var(--surface-variant);">
+        <div class="auth-card animate-up" style="max-width: 500px;">
+            <div style="margin-bottom: 32px; text-align: center;">
+                <div style="width: 56px; height: 56px; background: var(--primary-container); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                    <i class="fa-solid fa-user-plus" style="font-size: 1.5rem; color: var(--primary);"></i>
+                </div>
+                <h2 style="font-size: 1.75rem; margin-bottom: 8px;">Add New Admin</h2>
+                <p style="font-size: 0.875rem; color: var(--on-surface-variant);">Register a new restaurant partner</p>
+            </div>
+
+            <form th:action="@{/addingAdmin}" method="post">
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 0.875rem; font-weight: 700;">Full Name</label>
+                    <input type="text" name="adminName" placeholder="Enter name..." class="input-field" minlength="2" required>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 0.875rem; font-weight: 700;">Email Address</label>
+                    <input type="email" name="adminEmail" placeholder="admin@example.com" class="input-field" required>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 0.875rem; font-weight: 700;">Mobile Number</label>
+                    <input type="tel" name="adminNumber" placeholder="10 digit number..." class="input-field" pattern="[0-9]{10}" required>
+                </div>
+
+                <div style="margin-bottom: 32px;">
+                    <label style="font-size: 0.875rem; font-weight: 700;">Access Password</label>
+                    <input type="text" name="adminPassword" placeholder="Set temporary password..." class="input-field" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px;">
+                    <a href="/admin/services" class="btn btn-outline">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer style="padding: 40px; text-align: center; color: var(--on-surface-variant); font-size: 0.875rem;">
+        &copy; 2026 Food Fiesta Secure Admin Gateway.
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Food Fiesta</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <nav th:replace="~{Navigation::navbar()}"></nav>
+
+    <div class="auth-wrapper">
+        <div class="auth-card animate-up">
+            <div style="margin-bottom: 32px; text-align: center;">
+                <div style="width: 48px; height: 48px; background: var(--primary-container); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                    <i class="fa-solid fa-user-plus" style="color: var(--primary);"></i>
+                </div>
+                <h2 style="font-size: 1.75rem; margin-bottom: 8px;">Create Account</h2>
+                <p style="font-size: 0.875rem; color: var(--on-surface-variant);">Join the Food Fiesta family today</p>
+            </div>
+
+            <form th:action="@{/register}" method="post" th:object="${userRegistration}">
+                <div style="margin-bottom: 16px;">
+                    <label style="font-size: 0.875rem; font-weight: 600;">Full Name</label>
+                    <input type="text" th:field="*{uname}" placeholder="John Doe" class="input-field" required>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-size: 0.875rem; font-weight: 600;">Email Address</label>
+                    <input type="email" th:field="*{uemail}" placeholder="john@example.com" class="input-field" required>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-size: 0.875rem; font-weight: 600;">Phone Number</label>
+                    <input type="text" th:field="*{unumber}" placeholder="+91 9876543210" class="input-field" required>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-size: 0.875rem; font-weight: 600;">Choose Password</label>
+                    <input type="password" th:field="*{upassword}" placeholder="••••••••" class="input-field" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Register Now</button>
+            </form>
+
+            <p th:if="${error}" th:text="${error}" style="color: var(--primary); font-size: 0.875rem; margin-top: 16px; text-align: center;"></p>
+            
+            <p style="margin-top: 24px; text-align: center; font-size: 0.875rem; color: var(--on-surface-variant);">
+                Already have an account? <a th:href="@{/login}" style="color: var(--primary); font-weight: 700; text-decoration: none;">Sign In</a>
+            </p>
+        </div>
+    </div>
+
+    <footer style="padding: 48px 5%; text-align: center; color: var(--on-surface-variant); font-size: 0.875rem;">
+        &copy; 2026 Food Fiesta. Privacy Protected.
+    </footer>
+</body>
+
+</html>
