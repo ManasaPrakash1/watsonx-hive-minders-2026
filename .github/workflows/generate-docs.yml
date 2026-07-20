@@ -28,17 +28,17 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. Installer Bob Shell (URL corrigée)
+      # 2. Installer Bob Shell — --pm npm évite le prompt interactif de sélection du package manager
       - name: Install Bob Shell
         run: |
-          curl -fsSL https://bob.ibm.com/download/bobshell.sh | bash
+          curl -fsSL https://bob.ibm.com/download/bobshell.sh | bash -s -- --pm npm
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       # 3. Accepter la licence (obligatoire au premier run)
       - name: Accept Bob license
         env:
           BOBSHELL_API_KEY: ${{ secrets.BOBSHELL_API_KEY }}
-        run: bob --accept-license --auth-method api-key -p "hello"
+        run: echo "1" | bob --accept-license --auth-method api-key -p "hello"
 
       # 4. Générer le rapport d'audit de dette technique
       # working-directory pointe vers Food-Fiesta pour que Bob Shell détecte .bob/skills/
