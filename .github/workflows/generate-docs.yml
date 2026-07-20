@@ -19,52 +19,45 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: write               # Nécessaire pour le git push final
 
     steps:
-      # 1. Checkout
+      # 1. Récupérer le code
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. Install Bob Shell (correct URL)
+      # 2. Installer Bob Shell
       - name: Install Bob Shell
         run: |
-          curl -fsSL https://bob.ibm.com/download/bobshell.sh | bash
+          curl -fsSL https://bob.ibm.com/install.sh | sh
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      # 3. Accept license
+      # 3. Accepter la licence (obligatoire au premier run)
       - name: Accept Bob license
         env:
           BOBSHELL_API_KEY: ${{ secrets.BOBSHELL_API_KEY }}
         run: bob --accept-license --auth-method api-key -p "hello"
 
-      # 4. Run audit-dette-technique skill
-      # The skill SKILL.md is at watsonx-hive-minders/Food-Fiesta/.bob/skills/audit-dette-technique/SKILL.md
-      # Bob Shell is run from the Food-Fiesta subfolder so it picks up the project-level .bob/skills/
+      # 4. Générer le rapport d'audit de dette technique
       - name: Run audit-dette-technique skill
         env:
           BOBSHELL_API_KEY: ${{ secrets.BOBSHELL_API_KEY }}
-        working-directory: watsonx-hive-minders/Food-Fiesta
         run: |
           bob --auth-method api-key \
               --yolo \
-              -p "Lance le skill audit-dette-technique et génère le rapport complet dans docs/audit/dette_technique.html et docs/audit/dette_technique_baseline.json"
+              -p "Lance le skill audit-dette-technique et génère le rapport complet dans docs/audit/dette_technique.pdf et docs/audit/dette_technique.html"
 
-      # 5. Run onboarding-dev skill
+      # 5. Générer le guide d'onboarding développeur
       - name: Run onboarding-dev skill
         env:
           BOBSHELL_API_KEY: ${{ secrets.BOBSHELL_API_KEY }}
-        working-directory: watsonx-hive-minders/Food-Fiesta
         run: |
           bob --auth-method api-key \
               --yolo \
-              -p "Lance le skill onboarding-dev et génère le guide complet dans docs/onboarding/devOnboarding.html et docs/onboarding/architecture.md"
+              -p "Lance le skill onboarding-dev et génère le guide complet dans docs/onboarding/devOnboarding.pdf et docs/onboarding/architecture.md"
 
-      # 6. Commit updated docs
+      # 6. Committer les docs mis à jour dans le repo
       - name: Commit updated docs
-        working-directory: watsonx-hive-minders/Food-Fiesta
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
