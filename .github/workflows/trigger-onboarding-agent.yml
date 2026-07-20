@@ -58,10 +58,10 @@ jobs:
           TODAY=$(date "+%-d %B %Y")
           DOCS_DIR="watsonx-hive-minders/Food-Fiesta/docs/onboarding"
 
-          if [ -f "$DOCS_DIR/devOnboarding.pdf" ]; then
+          if [ -f "$DOCS_DIR/devOnboarding.html" ]; then
             sed -i "s|Generated: [0-9]* [A-Za-z]* [0-9]*[^<]*|Generated: $TODAY (auto-updated by CI)|g" \
-              "$DOCS_DIR/devOnboarding.pdf"
-            echo "✅ Updated date in devOnboarding.pdf → $TODAY"
+              "$DOCS_DIR/devOnboarding.html"
+            echo "✅ Updated date in devOnboarding.html → $TODAY"
           fi
 
           if [ -f "$DOCS_DIR/architecture.md" ]; then

@@ -144,7 +144,7 @@ Docker and PostgreSQL are only needed if you choose the PostgreSQL/Docker setup.
 Clone the project:
 
 ```bash
-git clone https://github.com/imrajeevnayan/Food-Fiesta.git
+git clone https://github.com/ManasaPrakash1/watsonx-hive-minders-2026
 cd Food-Fiesta
 ```
 

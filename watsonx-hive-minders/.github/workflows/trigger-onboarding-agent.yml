@@ -61,12 +61,12 @@ jobs:
           TODAY=$(date "+%-d %B %Y")
           DOCS_DIR="watsonx-hive-minders/Food-Fiesta/docs/onboarding"
 
-          # Update the generation date in devOnboarding.pdf if it exists
+          # Update the generation date in devOnboarding.html if it exists
           if [ -f "$DOCS_DIR/devOnboarding.pdf" ]; then
             # Replace the date in the cover header (written by Bob as static text)
             sed -i "s|Generated: [0-9]* [A-Za-z]* [0-9]*|Generated: $TODAY (auto-updated)|g" \
-              "$DOCS_DIR/devOnboarding.pdf"
-            echo "✅ Updated generation date in devOnboarding.pdf to: $TODAY"
+              "$DOCS_DIR/devOnboarding.html"
+            echo "✅ Updated generation date in devOnboarding.html to: $TODAY"
           fi
 
           # Update the date in architecture.md if it exists

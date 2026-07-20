@@ -1,6 +1,6 @@
 {
-  "date": "2026-07-17",
-  "version": "8.0",
+  "date": "2026-07-20",
+  "version": "9.0",
   "project": "Food Fiesta (com.example.demo) — Spring Boot 3.4.2 / Java 21",
   "ratesByCategoryEuros": {
     "security": 800,
@@ -27,11 +27,11 @@
   "totalTestFiles": 17,
   "deltaVsPrevious": {
     "baselineDate": "2026-07-17",
-    "baselineVersion": "7.0",
-    "debtDaysDelta": 3.7,
-    "debtEurosDelta": 2225,
+    "baselineVersion": "8.0",
+    "debtDaysDelta": 0,
+    "debtEurosDelta": 0,
     "testCoverageDelta": 0.0,
-    "note": "Régression architecture (+4j) due à un décompte plus précis des 4 services sans @Transactional. Sécurité stable (6 critiques identiques). OPS améliore (-0.5j). Tests stables à 67%."
+    "note": "Dette stable — aucune régression ni amélioration vs v8.0. 6 findings critiques identiques. La dette de sécurité (mots de passe en clair, CSRF désactivé) reste la priorité absolue."
   },
   "topRiskyFiles": [
     "src/main/java/com/example/demo/services/AdminServices.java",
@@ -45,7 +45,7 @@
     "CRITIQUE — Mot de passe admin123 codé en dur (DataLoader)",
     "CRITIQUE — Mots de passe exposés dans toString() (AdminLogin + UserLogin)",
     "CRITIQUE — OAUTH_USER placeholder codé en dur (OAuth2Controller)",
-    "URGENT  — Console H2 exposée publiquement (CVE-2022-45868)",
+    "URGENT  — CSRF désactivé globalement (SecurityConfig)",
     "URGENT  — BCryptPasswordEncoder déclaré mais jamais câblé",
     "URGENT  — 9 mutations via @GetMapping",
     "ATTENTION — 4 services sans @Transactional",
