@@ -44,6 +44,17 @@ class ProductControllerTest {
         verify(productServices, times(1)).addProduct(any(Product.class));
     }
 
+    @Test
+    void addingProduct_withNoParams_stillSavesAndRedirects() throws Exception {
+        doNothing().when(productServices).addProduct(any(Product.class));
+
+        mockMvc.perform(post("/addingProduct"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/admin/services"));
+
+        verify(productServices, times(1)).addProduct(any(Product.class));
+    }
+
     // ── GET /updatingProduct/{productId} ─────────────────────────────────
 
     @Test
