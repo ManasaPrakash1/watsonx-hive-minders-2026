@@ -38,7 +38,7 @@ jobs:
       - name: Accept Bob license
         env:
           BOBSHELL_API_KEY: ${{ secrets.BOBSHELL_API_KEY }}
-        run: echo "1" | bob --accept-license --auth-method api-key -p "hello"
+        run: bob --accept-license --auth-method api-key -p "hello"
 
       # 4. Générer le rapport d'audit de dette technique
       # working-directory pointe vers Food-Fiesta pour que Bob Shell détecte .bob/skills/
