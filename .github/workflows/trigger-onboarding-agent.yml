@@ -20,6 +20,10 @@ on:
         required: false
         default: 'Manual refresh of onboarding docs'
 
+# Grant the GITHUB_TOKEN write access so the workflow can commit back to the repo
+permissions:
+  contents: write
+
 jobs:
   regenerate-onboarding-docs:
     name: Regenerate Onboarding Docs
