@@ -289,7 +289,9 @@ Store the output. Do NOT use `<script>document.write(...)</script>` — Edge hea
 
 **Step B — Detect the PDF engine**
 
-Run the following to find which PDF engine is available on this machine:
+First detect the operating system, then check for available browsers accordingly.
+
+**On Windows** — run this PowerShell command:
 
 ```powershell
 $edge86 = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
@@ -299,6 +301,17 @@ if (Test-Path $edge86) { Write-Output "EDGE:$edge86" }
 elseif (Test-Path $edge64) { Write-Output "EDGE:$edge64" }
 elseif (Test-Path $chrome) { Write-Output "CHROME:$chrome" }
 else { Write-Output "NONE" }
+```
+
+**On Linux/macOS** — run this shell command:
+
+```bash
+if command -v google-chrome &>/dev/null; then echo "CHROME:$(command -v google-chrome)"
+elif command -v chromium-browser &>/dev/null; then echo "CHROME:$(command -v chromium-browser)"
+elif command -v chromium &>/dev/null; then echo "CHROME:$(command -v chromium)"
+elif command -v google-chrome-stable &>/dev/null; then echo "CHROME:$(command -v google-chrome-stable)"
+else echo "NONE"
+fi
 ```
 
 - If the result starts with `EDGE:` or `CHROME:` — store the path and use it in Step D.
@@ -315,17 +328,32 @@ Write the complete self-contained HTML to `docs/onboarding/devOnboarding.html` u
 
 **Step D — Convert to PDF and verify**
 
-Run the conversion:
+**On Windows** — run:
 
 ```powershell
 & "<engine-path>" --headless --disable-gpu --print-to-pdf="$((Get-Location).Path)\docs\onboarding\devOnboarding.pdf" --no-pdf-header-footer "$((Get-Location).Path)\docs\onboarding\devOnboarding.html"
 ```
 
-After the command completes, **verify the PDF was created**:
-
+Verify:
 ```powershell
 Test-Path "$((Get-Location).Path)\docs\onboarding\devOnboarding.pdf"
 ```
+
+**On Linux/macOS** — run:
+
+```bash
+"<engine-path>" --headless --disable-gpu --no-sandbox \
+  --print-to-pdf="$(pwd)/docs/onboarding/devOnboarding.pdf" \
+  --no-pdf-header-footer \
+  "$(pwd)/docs/onboarding/devOnboarding.html"
+```
+
+Verify:
+```bash
+test -f "$(pwd)/docs/onboarding/devOnboarding.pdf" && echo "True" || echo "False"
+```
+
+After the command completes, **verify the PDF was created**:
 
 - If `True` — keep the HTML file as well. Both `devOnboarding.pdf` and `devOnboarding.html` will be available in `docs/onboarding/`.
 - If `False` — do NOT delete the HTML file. Warn the developer that PDF generation failed and the HTML is available instead.

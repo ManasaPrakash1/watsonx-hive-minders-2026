@@ -51,7 +51,13 @@ jobs:
               --yolo \
               -p "Lance le skill audit-dette-technique et génère le rapport complet dans docs/audit/dette_technique.html et docs/audit/dette_technique_baseline.json"
 
-      # 5. Générer le guide d'onboarding développeur
+      # 5. Installer Chromium pour la génération du PDF par le skill onboarding-dev
+      - name: Install Chromium
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y chromium-browser
+
+      # 6. Générer le guide d'onboarding développeur
       - name: Run onboarding-dev skill
         env:
           BOBSHELL_API_KEY: ${{ secrets.BOBSHELL_API_KEY }}
