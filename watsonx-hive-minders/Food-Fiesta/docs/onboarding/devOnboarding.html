@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Fiesta — Developer Onboarding Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, "Segoe UI", Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #1f2328; background: #ffffff; }
+  .page { max-width: 900px; margin: 0 auto; padding: 40px 32px 60px; }
+
+  /* Cover */
+  .cover { background: #1f2328; color: #fff; border-radius: 10px; padding: 40px 40px 32px; margin-bottom: 40px; }
+  .cover h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .cover .subtitle { font-size: 16px; color: #a0aec0; margin-bottom: 20px; }
+  .cover .meta { display: flex; gap: 24px; font-size: 12px; color: #718096; }
+  .cover .meta span { background: #2d3748; border-radius: 5px; padding: 4px 10px; }
+
+  /* TOC */
+  .toc { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px 24px; margin-bottom: 36px; }
+  .toc h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #57606a; margin-bottom: 10px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 4px; font-size: 13px; }
+  .toc a { color: #3b82d4; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Sections */
+  h2.section-title { font-size: 20px; font-weight: 700; color: #1f2328; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin: 36px 0 16px; }
+  h3 { font-size: 15px; font-weight: 700; color: #1f2328; margin: 22px 0 8px; }
+  h4 { font-size: 13px; font-weight: 700; color: #57606a; margin: 16px 0 6px; text-transform: uppercase; letter-spacing: .05em; }
+  p { margin-bottom: 12px; }
+  ul, ol { padding-left: 22px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+
+  /* Code */
+  code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 12.5px; background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 1px 5px; }
+  pre { background: #1f2328; color: #e2e8f0; border-radius: 8px; padding: 16px 18px; overflow-x: auto; margin: 12px 0; }
+  pre code { background: none; border: none; padding: 0; color: inherit; font-size: 13px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px; }
+  th { background: #f7f8fa; font-weight: 700; text-align: left; padding: 8px 12px; border: 1px solid #e5e7eb; }
+  td { padding: 7px 12px; border: 1px solid #e5e7eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafbfc; }
+
+  /* Callouts */
+  .callout { border-left: 4px solid #3b82d4; background: #eff6ff; border-radius: 0 6px 6px 0; padding: 10px 14px; margin: 14px 0; font-size: 13px; }
+  .callout.warn { border-color: #f6ad55; background: #fffaf0; }
+  .callout.danger { border-color: #fc8181; background: #fff5f5; }
+  .callout strong { display: block; margin-bottom: 2px; }
+
+  /* Badge */
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; margin-right: 4px; }
+  .badge-green { background: #c6f6d5; color: #22543d; }
+  .badge-red   { background: #fed7d7; color: #c53030; }
+  .badge-blue  { background: #bee3f8; color: #2c5282; }
+  .badge-yellow{ background: #fefcbf; color: #744210; }
+
+  /* ── Architecture flow diagram ── */
+  .arch-flow { display:flex; flex-direction:column; align-items:center; gap:0; margin:24px 0; }
+  .arch-layer { width:100%; max-width:700px; border-radius:10px; padding:14px 18px; margin:0; }
+  .arch-layer-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:10px; }
+  .arch-chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { border-radius:5px; padding:3px 10px; font-size:12px; font-family:monospace; font-weight:600; }
+  .chip-warn { outline:2px solid #f6ad55; outline-offset:1px; }
+  .arch-arrow { text-align:center; font-size:20px; color:#a0aec0; line-height:1; padding:6px 0; width:100%; max-width:700px; }
+  .arch-arrow span { display:block; font-size:11px; color:#a0aec0; margin-top:1px; }
+  .layer-browser  { background:#edf2f7; border:2px solid #a0aec0; }
+  .layer-security { background:#fff5f5; border:2px solid #fc8181; }
+  .layer-ctrl     { background:#ebf8ff; border:2px solid #63b3ed; }
+  .layer-svc      { background:#f0fff4; border:2px solid #68d391; }
+  .layer-repo     { background:#faf5ff; border:2px solid #b794f4; }
+  .layer-db       { background:#fffaf0; border:2px solid #f6ad55; }
+  .layer-session  { background:#fefcbf; border:2px solid #f6e05e; }
+  .chip-browser  { background:#e2e8f0; color:#2d3748; }
+  .chip-security { background:#fed7d7; color:#c53030; }
+  .chip-ctrl     { background:#bee3f8; color:#2c5282; }
+  .chip-svc      { background:#c6f6d5; color:#22543d; }
+  .chip-repo     { background:#e9d8fd; color:#44337a; }
+  .chip-db       { background:#feebc8; color:#7b341e; }
+  .chip-session  { background:#fef9c3; color:#713f12; }
+
+  /* Footer */
+  .footer { margin-top: 60px; padding-top: 16px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 12px; color: #57606a; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <h1>Food Fiesta</h1>
+    <div class="subtitle">Developer Onboarding Guide</div>
+    <div class="meta">
+      <span>Generated: 20 July 2026</span>
+      <span>Java 21 · Spring Boot 3.4.2</span>
+      <span>Author: Bob (IBM)</span>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+      <li><a href="#purpose">Purpose</a></li>
+      <li><a href="#quickstart">How to Start the Application</a></li>
+      <li><a href="#architecture">Application Architecture</a></li>
+      <li><a href="#diagram">Architecture Diagram</a></li>
+      <li><a href="#cicd">CI/CD &amp; Deployment</a></li>
+      <li><a href="#health">Project Health &amp; Technical Debt Tracking</a></li>
+      <li><a href="#gotchas">Known Gotchas &amp; Contribution Guide</a></li>
+    </ol>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 1 — PURPOSE                            -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2 class="section-title" id="purpose">1 — Purpose</h2>
+
+  <p><strong>Food Fiesta</strong> is a Spring Boot fullstack dining management platform. It allows customers to browse a food menu, register accounts, log in, and place orders. Restaurant administrators manage the full catalogue of products, users, admins, and orders from a protected back-office dashboard.</p>
+
+  <h3>Main User Roles</h3>
+  <table>
+    <tr><th>Role</th><th>Access</th><th>Entry point</th></tr>
+    <tr><td><span class="badge badge-blue">Admin</span></td><td>Full CRUD on users, admins, products, orders. Back-office dashboard.</td><td><code>/login</code> → <code>/admin/services</code></td></tr>
+    <tr><td><span class="badge badge-green">Customer</span></td><td>Browse menu, register, log in, search products, place and view orders.</td><td><code>/login</code> → <code>/dashboard</code></td></tr>
+    <tr><td><span class="badge badge-yellow">Google OAuth2</span></td><td>Same as Customer — auto-provisioned on first Google login.</td><td><code>/login</code> → Google → <code>/oauth2/success</code></td></tr>
+  </table>
+
+  <h3>Core Features</h3>
+  <ul>
+    <li>Thymeleaf server-side rendered UI with modern CSS/JS</li>
+    <li>Dual login flow: custom form-based (admin &amp; customer) + Google OAuth2</li>
+    <li>Product inventory management (add, edit, delete food items)</li>
+    <li>User self-registration and admin-managed user accounts</li>
+    <li>Order placement with automatic total calculation and order history</li>
+    <li>Spring Data JPA persistence (H2 in-memory for local dev, PostgreSQL for Docker/prod)</li>
+    <li>Swagger/OpenAPI documentation at <code>/swagger-ui/index.html</code></li>
+  </ul>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 2 — HOW TO START                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2 class="section-title" id="quickstart">2 — How to Start the Application</h2>
+
+  <h3>Prerequisites</h3>
+  <table>
+    <tr><th>Tool</th><th>Version</th><th>Notes</th></tr>
+    <tr><td>JDK</td><td>21</td><td>Temurin recommended. Maven Wrapper (<code>mvnw</code>) is bundled — no separate Maven install needed.</td></tr>
+    <tr><td>Docker</td><td>Any recent</td><td>Only needed for the PostgreSQL / Docker Compose path.</td></tr>
+    <tr><td>Git</td><td>Any</td><td></td></tr>
+  </table>
+
+  <h3>Option A — Local H2 (fastest)</h3>
+  <pre><code># Clone
+git clone https://github.com/imrajeevnayan/Food-Fiesta.git
+cd Food-Fiesta
+
+# Run (macOS / Linux)
+./mvnw spring-boot:run
+
+# Run (Windows PowerShell)
+.\mvnw.cmd spring-boot:run</code></pre>
+
+  <div class="callout">
+    <strong>Windows — JAVA_HOME not set?</strong>
+    <code>$env:JAVA_HOME="C:\Program Files\Java\jdk-21.0.11"; .\mvnw.cmd spring-boot:run</code>
+  </div>
+
+  <h3>Option B — Docker Compose (PostgreSQL)</h3>
+  <pre><code>docker compose up -d          # builds the image and starts app + db
+docker compose logs -f app    # follow application logs</code></pre>
+
+  <h3>Local URLs</h3>
+  <table>
+    <tr><th>URL</th><th>What it is</th></tr>
+    <tr><td><code>http://localhost:8080/</code></td><td>Main landing page</td></tr>
+    <tr><td><code>http://localhost:8080/swagger-ui/index.html</code></td><td>Swagger / OpenAPI docs</td></tr>
+    <tr><td><code>http://localhost:8080/h2-console</code></td><td>H2 in-memory DB console (local only)</td></tr>
+  </table>
+
+  <h3>H2 Console Connection</h3>
+  <pre><code>JDBC URL : jdbc:h2:mem:foodfiesta
+User Name: sa
+Password : (leave blank)</code></pre>
+
+  <div class="callout warn">
+    <strong>H2 is in-memory.</strong> All data is lost when the app stops. Use Docker Compose if you need data to survive restarts.
+  </div>
+
+  <h3>Default Seeded Credentials</h3>
+  <table>
+    <tr><th>Role</th><th>Email</th><th>Password</th></tr>
+    <tr><td>Admin</td><td><code>admin@foodfiesta.com</code></td><td><code>admin123</code></td></tr>
+  </table>
+
+  <h3>Environment Variables / Config</h3>
+  <p>The default config is in <code>src/main/resources/application.properties</code>. Override with environment variables for Docker or production:</p>
+  <table>
+    <tr><th>Variable</th><th>Default</th><th>Purpose</th></tr>
+    <tr><td><code>SPRING_DATASOURCE_URL</code></td><td><code>jdbc:postgresql://db:5432/foodfiesta</code></td><td>JDBC URL (Docker)</td></tr>
+    <tr><td><code>SPRING_DATASOURCE_USERNAME</code></td><td><code>postgres</code></td><td>DB username</td></tr>
+    <tr><td><code>SPRING_DATASOURCE_PASSWORD</code></td><td><code>password</code></td><td>DB password</td></tr>
+    <tr><td><code>spring.security.oauth2.client.registration.google.client-id</code></td><td><code>YOUR_CLIENT_ID</code></td><td>Google OAuth2 client ID</td></tr>
+    <tr><td><code>spring.security.oauth2.client.registration.google.client-secret</code></td><td><code>YOUR_CLIENT_SECRET</code></td><td>Google OAuth2 secret</td></tr>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 3 — ARCHITECTURE                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2 class="section-title" id="architecture">3 — Application Architecture</h2>
+
+  <h3>Layer Overview</h3>
+  <table>
+    <tr><th>Layer</th><th>Package</th><th>Responsibility</th></tr>
+    <tr><td>Controllers</td><td><code>com.example.demo.controllers</code></td><td>Handle HTTP requests, manage HttpSession, delegate to services, return Thymeleaf views or redirects.</td></tr>
+    <tr><td>Services</td><td><code>com.example.demo.services</code></td><td>Business logic. Annotated <code>@Component</code> (not <code>@Service</code> — intentional, see Gotchas).</td></tr>
+    <tr><td>Repositories</td><td><code>com.example.demo.repositories</code></td><td>Spring Data JPA interfaces — <code>CrudRepository</code> for Admin/User/Product, <code>JpaRepository</code> for Orders.</td></tr>
+    <tr><td>Entities</td><td><code>com.example.demo.entities</code></td><td>JPA-mapped domain objects.</td></tr>
+    <tr><td>Config</td><td><code>com.example.demo.config</code></td><td><code>SecurityConfig</code> (Spring Security), <code>DataLoader</code> (seed data), <code>OpenApiConfig</code> (Swagger).</td></tr>
+    <tr><td>Login DTOs</td><td><code>com.example.demo.loginCredentials</code></td><td>Simple POJOs <code>AdminLogin</code> and <code>UserLogin</code> used as form-binding objects.</td></tr>
+    <tr><td>Utility</td><td><code>com.example.demo.count</code></td><td><code>Logic.countTotal()</code> — computes order total (price × quantity).</td></tr>
+  </table>
+
+  <h3>Authentication Mechanism</h3>
+  <p>Authentication is <strong>custom session-based</strong>, not Spring Security's built-in <code>UserDetailsService</code>. Spring Security is configured only to protect routes and enable OAuth2 — the actual credential validation is done manually in service methods.</p>
+  <ul>
+    <li><strong>Admin login</strong> — <code>POST /adminLogin</code> → <code>AdminServices.validateAdminCredentials()</code> compares plain-text password directly against the DB value. On success, stores the admin email in <code>HttpSession</code> as <code>"loggedInAdmin"</code>.</li>
+    <li><strong>Customer login</strong> — <code>POST /userLogin</code> → <code>UserServices.validateLoginCredentials()</code> iterates all users and compares plain-text passwords. On success, stores the full <code>User</code> JPA entity in <code>HttpSession</code> as <code>"loggedInUser"</code>.</li>
+    <li><strong>Google OAuth2</strong> — handled by Spring Security. On success, redirects to <code>/oauth2/success</code> where <code>OAuth2Controller</code> auto-provisions a local <code>User</code> record (password set to placeholder <code>"OAUTH_USER"</code>) and stores it in session.</li>
+    <li><strong>Public routes</strong>: <code>/</code>, <code>/home</code>, <code>/login</code>, <code>/register</code>, <code>/adminLogin</code>, <code>/userLogin</code>, <code>/products</code>, <code>/location</code>, <code>/about</code>, plus all static assets and Swagger/H2 console.</li>
+    <li>CSRF is <strong>disabled</strong>. Passwords for users and admins are stored in <strong>plain text</strong> (no BCrypt applied, despite <code>PasswordEncoder</code> bean being declared).</li>
+  </ul>
+
+  <h3>Data Model</h3>
+  <table>
+    <tr><th>Entity</th><th>DB Table</th><th>Key Fields</th><th>Relations</th></tr>
+    <tr><td><code>User</code></td><td><code>customer_info</code></td><td><code>u_id</code> (PK), <code>uname</code>, <code>uemail</code>, <code>upassword</code>, <code>unumber</code></td><td>One-to-many → <code>Orders</code></td></tr>
+    <tr><td><code>Admin</code></td><td><code>admin</code></td><td><code>adminId</code> (PK), <code>adminName</code>, <code>adminEmail</code>, <code>adminPassword</code>, <code>adminNumber</code></td><td>None</td></tr>
+    <tr><td><code>Product</code></td><td><code>product_table</code></td><td><code>pid</code> (PK), <code>pname</code>, <code>pprice</code>, <code>pdescription</code></td><td>None</td></tr>
+    <tr><td><code>Orders</code></td><td><code>order_info</code></td><td><code>oId</code> (PK, AUTO), <code>oName</code>, <code>oPrice</code>, <code>oQuantity</code>, <code>orderDate</code>, <code>totalAmmout</code></td><td>Many-to-one → <code>User</code> via FK <code>user_u_id</code></td></tr>
+  </table>
+
+  <h3>Request Lifecycle</h3>
+  <p>Browser → <strong>Spring Security filter chain</strong> (route whitelist check) → <strong>Controller</strong> (session guard, form binding) → <strong>Service</strong> (business logic, validation) → <strong>Repository</strong> (JPA / Hibernate) → <strong>H2 / PostgreSQL</strong> → Thymeleaf template → HTML response to browser.</p>
+
+  <h3>Controllers Reference</h3>
+  <table>
+    <tr><th>Controller</th><th>Key Endpoints</th></tr>
+    <tr><td><code>HomeController</code></td><td><code>GET /</code>, <code>/home</code>, <code>/products</code>, <code>/location</code>, <code>/about</code>, <code>/login</code>, <code>/userLogin</code>, <code>/register</code></td></tr>
+    <tr><td><code>AdminController</code></td><td><code>POST /adminLogin</code>, <code>POST /userLogin</code>, <code>GET /dashboard</code>, <code>GET /admin/services</code>, CRUD for admins/products/users, <code>POST /product/order</code>, <code>GET /logout</code></td></tr>
+    <tr><td><code>UserController</code></td><td><code>POST /addingUser</code>, <code>POST /register</code>, <code>GET /updatingUser/{id}</code>, <code>GET /deleteUser/{id}</code></td></tr>
+    <tr><td><code>ProductController</code></td><td><code>POST /addingProduct</code>, <code>GET /updatingProduct/{productId}</code>, <code>GET /deleteProduct/{productId}</code></td></tr>
+    <tr><td><code>OAuth2Controller</code></td><td><code>GET /oauth2/success</code></td></tr>
+    <tr><td><code>OrderController</code></td><td>Empty stub — no endpoints implemented yet.</td></tr>
+    <tr><td><code>TestController</code></td><td>Unknown — inspect before use.</td></tr>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 4 — ARCHITECTURE DIAGRAM               -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2 class="section-title" id="diagram">4 — Architecture Diagram</h2>
+
+  <div class="arch-flow">
+
+    <div class="arch-layer layer-browser">
+      <div class="arch-layer-title">🌐 Client / Browser</div>
+      <div class="arch-chips">
+        <span class="chip chip-browser">Thymeleaf SSR</span>
+        <span class="chip chip-browser">HTML Forms (POST/GET)</span>
+        <span class="chip chip-browser">CSS + JavaScript (static)</span>
+      </div>
+    </div>
+
+    <div class="arch-arrow">↓ <span>HTTP Request</span></div>
+
+    <div class="arch-layer layer-security">
+      <div class="arch-layer-title">🔒 Spring Security — custom session auth (CSRF disabled ⚠️)</div>
+      <div class="arch-chips">
+        <span class="chip chip-security">Route whitelist (permitAll)</span>
+        <span class="chip chip-security chip-warn">Plain-text password comparison ⚠️</span>
+        <span class="chip chip-security">Google OAuth2 login</span>
+        <span class="chip chip-security">HttpSession (loggedInUser / loggedInAdmin)</span>
+        <span class="chip chip-security chip-warn">BCryptPasswordEncoder declared but unused ⚠️</span>
+      </div>
+    </div>
+
+    <div class="arch-arrow">↓ <span>Authorised requests</span></div>
+
+    <div class="arch-layer layer-ctrl">
+      <div class="arch-layer-title">🎮 Controllers (@Controller — Thymeleaf MVC)</div>
+      <div class="arch-chips">
+        <span class="chip chip-ctrl">HomeController</span>
+        <span class="chip chip-ctrl chip-warn">AdminController ⚠️ (God class — auth + orders + admin CRUD)</span>
+        <span class="chip chip-ctrl">UserController</span>
+        <span class="chip chip-ctrl">ProductController</span>
+        <span class="chip chip-ctrl">OAuth2Controller</span>
+        <span class="chip chip-ctrl chip-warn">OrderController ⚠️ (empty stub)</span>
+      </div>
+    </div>
+
+    <div class="arch-arrow">↓ <span>Service calls</span></div>
+
+    <div class="arch-layer layer-svc">
+      <div class="arch-layer-title">⚙️ Services (annotated @Component, not @Service — intentional)</div>
+      <div class="arch-chips">
+        <span class="chip chip-svc chip-warn">AdminServices ⚠️ (Optional.get() unguarded in getAdmin())</span>
+        <span class="chip chip-svc chip-warn">UserServices ⚠️ (Optional.get() unguarded; O(n) login scan)</span>
+        <span class="chip chip-svc chip-warn">ProductServices ⚠️ (Optional.get() unguarded in getProduct() &amp; updateproduct())</span>
+        <span class="chip chip-svc">OrderServices</span>
+      </div>
+    </div>
+
+    <div class="arch-arrow">↓ <span>Spring Data JPA / Hibernate</span></div>
+
+    <div class="arch-layer layer-repo">
+      <div class="arch-layer-title">🗄️ Repositories (Spring Data JPA)</div>
+      <div class="arch-chips">
+        <span class="chip chip-repo">AdminRepository (CrudRepository)</span>
+        <span class="chip chip-repo">UserRepository (CrudRepository)</span>
+        <span class="chip chip-repo">ProductRepository (CrudRepository)</span>
+        <span class="chip chip-repo">OrderRepository (JpaRepository)</span>
+      </div>
+    </div>
+
+    <div class="arch-arrow">↓ <span>SQL (H2 local / PostgreSQL Docker+prod)</span></div>
+
+    <div class="arch-layer layer-db">
+      <div class="arch-layer-title">💾 Data Stores</div>
+      <div class="arch-chips">
+        <span class="chip chip-db">customer_info ── User</span>
+        <span class="chip chip-db">admin ── Admin</span>
+        <span class="chip chip-db">product_table ── Product</span>
+        <span class="chip chip-db">order_info ── Orders</span>
+        <span class="chip chip-db">H2 (local, in-memory)</span>
+        <span class="chip chip-db">PostgreSQL (Docker / production)</span>
+      </div>
+    </div>
+
+    <div class="arch-arrow">↕ <span>Session state</span></div>
+
+    <div class="arch-layer layer-session">
+      <div class="arch-layer-title">💡 HTTP Session (javax/jakarta HttpSession)</div>
+      <div class="arch-chips">
+        <span class="chip chip-session">loggedInAdmin → String (email)</span>
+        <span class="chip chip-session chip-warn">loggedInUser → User (full JPA entity stored in session ⚠️)</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 5 — CI/CD & DEPLOYMENT                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2 class="section-title" id="cicd">5 — CI/CD &amp; Deployment</h2>
+
+  <h3>Continuous Integration — GitHub Actions</h3>
+  <p>File: <code>.github/workflows/ci.yml</code></p>
+  <table>
+    <tr><th>Property</th><th>Value</th></tr>
+    <tr><td>Trigger</td><td>Every push and pull request on <strong>all branches</strong> (<code>"**"</code>)</td></tr>
+    <tr><td>Runner</td><td><code>ubuntu-latest</code></td></tr>
+    <tr><td>Java version</td><td>21 (Temurin distribution, Maven cache enabled)</td></tr>
+    <tr><td>Steps</td><td>Checkout → Set up Java 21 → <code>chmod +x mvnw</code> → <code>./mvnw test</code></td></tr>
+    <tr><td>Artefacts produced</td><td>None stored — CI is test-only</td></tr>
+  </table>
+
+  <h3>Docker</h3>
+  <p>Multi-stage <code>Dockerfile</code>:</p>
+  <table>
+    <tr><th>Stage</th><th>Base image</th><th>What it does</th></tr>
+    <tr><td>build</td><td><code>eclipse-temurin:21-jdk-alpine</code></td><td>Resolves dependencies, runs <code>./mvnw clean package -DskipTests</code>, produces JAR</td></tr>
+    <tr><td>run</td><td><code>eclipse-temurin:21-jre-alpine</code></td><td>Copies JAR + <code>entrypoint.sh</code>, runs as non-root user <code>spring:spring</code></td></tr>
+  </table>
+  <div class="callout warn">
+    <strong>Security note:</strong> The Dockerfile uses <code>eclipse-temurin</code> from Docker Hub, not the Red Hat registry. For IBM environments, replace with <code>registry.redhat.io/ubi9/openjdk-21-runtime</code>.
+  </div>
+
+  <h3>docker-compose.yml Services</h3>
+  <table>
+    <tr><th>Service</th><th>Image</th><th>Port</th><th>Notes</th></tr>
+    <tr><td><code>app</code></td><td>Built from local Dockerfile</td><td>8080:8080</td><td>Depends on <code>db</code> health check passing</td></tr>
+    <tr><td><code>db</code></td><td><code>postgres:latest</code></td><td>5432:5432</td><td>Health check: <code>pg_isready -U postgres</code></td></tr>
+  </table>
+
+  <h3>AWS CodeBuild — buildspec.yml</h3>
+  <table>
+    <tr><th>Phase</th><th>Commands</th></tr>
+    <tr><td>install</td><td>Logs Maven and Java versions</td></tr>
+    <tr><td>build</td><td><code>mvn clean package -DskipTests</code></td></tr>
+    <tr><td>post_build</td><td>Copies JAR to <code>output/</code></td></tr>
+    <tr><td>artifacts</td><td><code>output/*.jar</code>, <code>appspec.yml</code>, <code>scripts/**/*</code></td></tr>
+  </table>
+  <p>Note: <code>appspec.yml</code> and <code>scripts/</code> are referenced as artefacts but not found in the repository — they need to be created for a full CodeDeploy pipeline.</p>
+
+  <h3>Environment Variables — Production Reference</h3>
+  <table>
+    <tr><th>Variable</th><th>Default</th><th>Source</th><th>Purpose</th></tr>
+    <tr><td><code>SPRING_DATASOURCE_URL</code></td><td><code>jdbc:postgresql://db:5432/foodfiesta</code></td><td>Dockerfile / docker-compose</td><td>Database JDBC URL</td></tr>
+    <tr><td><code>SPRING_DATASOURCE_USERNAME</code></td><td><code>postgres</code></td><td>Dockerfile / docker-compose</td><td>DB username</td></tr>
+    <tr><td><code>SPRING_DATASOURCE_PASSWORD</code></td><td><code>password</code></td><td>Dockerfile / docker-compose</td><td>DB password — <strong>change before prod</strong></td></tr>
+    <tr><td><code>POSTGRES_DB</code></td><td><code>foodfiesta</code></td><td>docker-compose (db service)</td><td>Database name</td></tr>
+    <tr><td><code>POSTGRES_USER</code></td><td><code>postgres</code></td><td>docker-compose (db service)</td><td>PostgreSQL superuser</td></tr>
+    <tr><td><code>POSTGRES_PASSWORD</code></td><td><code>password</code></td><td>docker-compose (db service)</td><td>PostgreSQL password</td></tr>
+    <tr><td><code>spring.security.oauth2.client.registration.google.client-id</code></td><td><code>YOUR_CLIENT_ID</code></td><td>application.properties</td><td>Google OAuth2</td></tr>
+    <tr><td><code>spring.security.oauth2.client.registration.google.client-secret</code></td><td><code>YOUR_CLIENT_SECRET</code></td><td>application.properties</td><td>Google OAuth2</td></tr>
+  </table>
+
+  <h3>Health Check</h3>
+  <p>No dedicated health endpoint is present in the controllers. Spring Boot Actuator is referenced in Swagger config (<code>springdoc.show-actuator=true</code>) but <code>spring-boot-starter-actuator</code> is <strong>not in pom.xml</strong> — so <code>/actuator/health</code> will return 404 unless the dependency is added.</p>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 6 — PROJECT HEALTH                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2 class="section-title" id="health">6 — Project Health &amp; Technical Debt Tracking</h2>
+
+  <p>A technical debt audit is automatically run at the end of this onboarding session. It scans the codebase for security, architecture, quality, and dependency findings, computes the total debt in days and euros, and saves its report to the <code>docs/audit/</code> folder.</p>
+
+  <h3>Re-running the Audit</h3>
+  <p>To regenerate the full audit report at any time (including a temporal delta vs. the previous baseline), open a new Bob conversation on this project and type:</p>
+  <pre><code>lance un audit de dette technique</code></pre>
+  <p>Bob will compare against the baseline snapshot stored in <code>docs/audit/dette_technique_baseline.json</code> and show what has improved or regressed since the last run.</p>
+
+  <h3>Audit Deliverables</h3>
+  <table>
+    <tr><th>File</th><th>Description</th></tr>
+    <tr><td><code>docs/audit/dette_technique.html</code></td><td>Interactive HTML report with KPI dashboard and prioritised backlog</td></tr>
+    <tr><td><code>docs/audit/dette_technique.pdf</code></td><td>PDF version with debt visualisation chart</td></tr>
+    <tr><td><code>docs/audit/dette_technique_baseline.json</code></td><td>Temporal tracking baseline — used for delta comparison</td></tr>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SECTION 7 — GOTCHAS & CONTRIBUTION GUIDE       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2 class="section-title" id="gotchas">7 — Known Gotchas &amp; Contribution Guide</h2>
+
+  <h3>Known Gotchas</h3>
+
+  <div class="callout danger">
+    <strong>Plain-text passwords — do not "fix" the login methods without a migration plan.</strong>
+    Both <code>AdminServices.validateAdminCredentials()</code> and <code>UserServices.validateLoginCredentials()</code> compare passwords in plain text. A <code>BCryptPasswordEncoder</code> bean <em>is</em> declared in <code>SecurityConfig</code> but is never injected or used. If you encode passwords in one place, you must migrate all stored passwords — coordinate with the team before touching this.
+  </div>
+
+  <div class="callout danger">
+    <strong>Full JPA entity stored in HttpSession.</strong>
+    <code>session.setAttribute("loggedInUser", loggedInUser)</code> stores the entire <code>User</code> JPA entity (including its lazy <code>orders</code> collection) in the HTTP session. This can cause <code>LazyInitializationException</code> after session serialisation. Always re-fetch the user from the DB or store only the ID.
+  </div>
+
+  <div class="callout warn">
+    <strong><code>Optional.get()</code> called without <code>isPresent()</code> guard.</strong>
+    <code>AdminServices.getAdmin()</code>, <code>UserServices.getUser()</code>, <code>ProductServices.getProduct()</code>, and <code>ProductServices.updateproduct()</code> all call <code>optional.get()</code> directly. Passing a non-existent ID will throw <code>NoSuchElementException</code> at runtime. Do not remove the guard-less calls without also adding error handling.
+  </div>
+
+  <div class="callout warn">
+    <strong>Services annotated <code>@Component</code> instead of <code>@Service</code>.</strong>
+    <code>AdminServices</code>, <code>UserServices</code>, <code>ProductServices</code>, and <code>OrderServices</code> are all annotated <code>@Component</code>. This works (Spring treats them identically at runtime) but is intentional styling — do not "correct" it to <code>@Service</code> without team discussion.
+  </div>
+
+  <div class="callout warn">
+    <strong>Mutation endpoints mapped to <code>@GetMapping</code>.</strong>
+    <code>/updatingAdmin/{id}</code>, <code>/updatingProduct/{productId}</code>, <code>/updatingUser/{id}</code>, <code>/deleteAdmin/{id}</code>, <code>/deleteProduct/{productId}</code>, and <code>/deleteUser/{id}</code> are all <code>@GetMapping</code>. This is by design (HTML forms can only GET/POST). Do not change verb without also updating the Thymeleaf templates.
+  </div>
+
+  <div class="callout warn">
+    <strong><code>OrderController</code> is an empty stub.</strong>
+    The class exists with imports but contains no methods. Do not assume any order-related routing flows through it — all active order handling is in <code>AdminController</code>.
+  </div>
+
+  <div class="callout warn">
+    <strong>Field name <code>totalAmmout</code> has a deliberate typo.</strong>
+    The <code>Orders</code> entity field is <code>totalAmmout</code> (double-m). This maps to a DB column of the same name. Never rename it without a DB migration.
+  </div>
+
+  <div class="callout warn">
+    <strong>Default admin password is hardcoded in <code>DataLoader</code>.</strong>
+    The seed admin account (<code>admin@foodfiesta.com</code> / <code>admin123</code>) is created unconditionally if the admin table is empty. For any non-local environment, change this before the first startup.
+  </div>
+
+  <div class="callout warn">
+    <strong>CSRF protection is disabled.</strong>
+    <code>SecurityConfig</code> calls <code>.csrf(csrf -&gt; csrf.disable())</code>. This is necessary because the app uses plain HTML forms without CSRF tokens, but it is a known security gap. Any future API endpoints should use token-based protection.
+  </div>
+
+  <div class="callout warn">
+    <strong><code>UserServices.validateLoginCredentials()</code> is O(n).</strong>
+    It loads <em>all</em> users from the DB and iterates them to find a matching email+password. Replace with a query (<code>findByUemailAndUpassword</code>) if the user count grows.
+  </div>
+
+  <h3>Contribution Guide</h3>
+
+  <h4>Run tests locally</h4>
+  <pre><code>./mvnw test       # macOS / Linux
+.\mvnw.cmd test   # Windows</code></pre>
+  <p>All existing tests must pass before pushing. The single test class is <code>FoodFrenzyApplicationTests</code> (Spring context load test).</p>
+
+  <h4>Run the app locally before pushing</h4>
+  <pre><code>./mvnw spring-boot:run</code></pre>
+
+  <h4>Branching convention</h4>
+  <p>The CI pipeline triggers on <strong>all branches</strong> and all pull requests. Use feature branches and merge to <code>main</code> via pull request. Direct pushes to <code>main</code> are not blocked by the pipeline but should be avoided.</p>
+
+  <h4>CI checks on push</h4>
+  <p>GitHub Actions runs automatically on every push: <strong>checkout → Java 21 setup → <code>./mvnw test</code></strong>. The build must be green before merging.</p>
+
+  <h4>Adding new service methods</h4>
+  <p><strong>If you add a new service method, add a matching test in the corresponding <code>*Test.java</code> file.</strong> Currently the only test file is <code>FoodFrenzyApplicationTests.java</code> — you will need to create dedicated unit test files as the suite grows.</p>
+
+  <h4>Adding a new endpoint</h4>
+  <ol>
+    <li>Add the handler method to the appropriate controller (or create a new <code>@Controller</code> class).</li>
+    <li>If the endpoint requires authentication, add a session guard (<code>if (session.getAttribute("loggedInUser") == null) return "redirect:/userLogin";</code>).</li>
+    <li>Add the route to <code>SecurityConfig.authorizeHttpRequests()</code> if it should be public.</li>
+    <li>Add a Thymeleaf template under <code>src/main/resources/templates/</code> if needed.</li>
+    <li>Document the endpoint with <code>@Operation</code> and <code>@Tag</code> annotations for Swagger.</li>
+  </ol>
+
+  <div class="footer">
+    <p>Made with IBM Bob &nbsp;|&nbsp; Food Fiesta Developer Onboarding &nbsp;|&nbsp; 20 July 2026</p>
+  </div>
+
+</div>
+</body>
+</html>
