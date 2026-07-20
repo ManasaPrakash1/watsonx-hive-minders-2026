@@ -5,9 +5,12 @@ on:
     branches:
       - main
     paths:                          # Ne se déclenche que si le code change
-      - 'src/**'
-      - 'pom.xml'
-      - '.bob/skills/**'
+      - 'watsonx-hive-minders/Food-Fiesta/src/**'
+      - 'watsonx-hive-minders/Food-Fiesta/pom.xml'
+      - 'watsonx-hive-minders/Food-Fiesta/README.md'
+      - 'watsonx-hive-minders/Food-Fiesta/Dockerfile'
+      - 'watsonx-hive-minders/Food-Fiesta/.bob/skills/**'
+      - 'watsonx-hive-minders/Food-Fiesta/src/main/resources/application.properties'
   workflow_dispatch:                # Permet aussi le déclenchement manuel
 
 jobs:
