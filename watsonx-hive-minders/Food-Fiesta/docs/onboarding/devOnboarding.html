@@ -1,75 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Fiesta - Developer Onboarding Guide</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+            font-size: 14px;
             line-height: 1.6;
             color: #2d3748;
             background: #f7fafc;
-            padding: 20px;
+            padding: 40px 20px;
         }
         .container {
             max-width: 900px;
             margin: 0 auto;
             background: white;
-            padding: 40px;
+            padding: 60px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .cover {
             text-align: center;
-            padding: 60px 20px;
+            padding: 60px 0;
             border-bottom: 3px solid #4299e1;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
         .cover h1 {
-            font-size: 36px;
-            color: #2b6cb0;
+            font-size: 42px;
+            color: #1a202c;
             margin-bottom: 10px;
+            font-weight: 700;
         }
-        .cover h2 {
+        .cover .subtitle {
             font-size: 24px;
             color: #4a5568;
+            margin-bottom: 30px;
             font-weight: 400;
-            margin-bottom: 20px;
         }
         .cover .date {
             font-size: 14px;
             color: #718096;
-            margin-top: 20px;
-        }
-        h1 {
-            font-size: 28px;
-            color: #2b6cb0;
-            margin: 30px 0 15px 0;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e2e8f0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         h2 {
-            font-size: 22px;
-            color: #2c5282;
-            margin: 25px 0 12px 0;
+            font-size: 28px;
+            color: #2d3748;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 600;
         }
         h3 {
-            font-size: 18px;
+            font-size: 20px;
             color: #2d3748;
+            margin: 30px 0 15px 0;
+            font-weight: 600;
+        }
+        h4 {
+            font-size: 16px;
+            color: #4a5568;
             margin: 20px 0 10px 0;
+            font-weight: 600;
         }
         p {
-            margin: 10px 0;
-            font-size: 14px;
+            margin: 12px 0;
+            color: #4a5568;
         }
         ul, ol {
-            margin: 10px 0 10px 25px;
-            font-size: 14px;
+            margin: 12px 0 12px 30px;
+            color: #4a5568;
         }
         li {
-            margin: 5px 0;
+            margin: 8px 0;
         }
         code {
             background: #edf2f7;
@@ -82,10 +92,11 @@
         pre {
             background: #2d3748;
             color: #e2e8f0;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 16px;
+            border-radius: 6px;
             overflow-x: auto;
-            margin: 15px 0;
+            margin: 16px 0;
+            font-family: 'Courier New', monospace;
             font-size: 13px;
             line-height: 1.5;
         }
@@ -97,12 +108,12 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 14px;
+            margin: 20px 0;
+            font-size: 13px;
         }
         th, td {
             border: 1px solid #e2e8f0;
-            padding: 10px;
+            padding: 12px;
             text-align: left;
         }
         th {
@@ -110,14 +121,14 @@
             font-weight: 600;
             color: #2d3748;
         }
-        tr:nth-child(even) {
-            background: #f7fafc;
+        td {
+            color: #4a5568;
         }
         .warning {
             background: #fff5f5;
             border-left: 4px solid #fc8181;
-            padding: 12px 15px;
-            margin: 15px 0;
+            padding: 16px;
+            margin: 20px 0;
             border-radius: 4px;
         }
         .warning strong {
@@ -126,16 +137,30 @@
         .info {
             background: #ebf8ff;
             border-left: 4px solid #4299e1;
-            padding: 12px 15px;
-            margin: 15px 0;
+            padding: 16px;
+            margin: 20px 0;
             border-radius: 4px;
+        }
+        .info strong {
+            color: #2c5282;
         }
         .success {
             background: #f0fff4;
-            border-left: 4px solid #48bb78;
-            padding: 12px 15px;
-            margin: 15px 0;
+            border-left: 4px solid #68d391;
+            padding: 16px;
+            margin: 20px 0;
             border-radius: 4px;
+        }
+        .success strong {
+            color: #22543d;
+        }
+        blockquote {
+            background: #faf5ff;
+            border-left: 4px solid #b794f4;
+            padding: 16px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #553c9a;
         }
         
         /* Architecture flow diagram */
@@ -147,7 +172,7 @@
         .chip-warn { outline:2px solid #f6ad55; outline-offset:1px; }
         .arch-arrow { text-align:center; font-size:20px; color:#a0aec0; line-height:1; padding:6px 0; width:100%; max-width:700px; }
         .arch-arrow span { display:block; font-size:11px; color:#a0aec0; margin-top:1px; }
-        
+
         /* Layer background colors */
         .layer-browser  { background:#edf2f7; border:2px solid #a0aec0; }
         .layer-security { background:#fff5f5; border:2px solid #fc8181; }
@@ -156,7 +181,7 @@
         .layer-repo     { background:#faf5ff; border:2px solid #b794f4; }
         .layer-db       { background:#fffaf0; border:2px solid #f6ad55; }
         .layer-session  { background:#fefcbf; border:2px solid #f6e05e; }
-        
+
         /* Chip colors matching their layer */
         .chip-browser  { background:#e2e8f0; color:#2d3748; }
         .chip-security { background:#fed7d7; color:#c53030; }
@@ -171,52 +196,52 @@
     <div class="container">
         <div class="cover">
             <h1>Food Fiesta</h1>
-            <h2>Developer Onboarding Guide</h2>
-            <p class="date">Generated on 20 July 2026</p>
+            <div class="subtitle">Developer Onboarding Guide</div>
+            <div class="date">Generated on 20 July 2026</div>
         </div>
 
-        <h1>1. Purpose</h1>
-        <p><strong>Food Fiesta</strong> is a full-stack dining management application that enables customers to browse a food menu, place orders, and track their order history. Administrators can manage the product catalog, user accounts, and view all orders through a dedicated back-office dashboard.</p>
+        <h2>1. Purpose</h2>
+        <p><strong>Food Fiesta</strong> is a full-stack dining management application that enables customers to browse a food menu, place orders, and track their order history, while administrators manage the product catalog, user accounts, and view all orders.</p>
         
         <h3>Business Domain</h3>
-        <p>Online food ordering and restaurant management system with dual-role access control.</p>
+        <p>Food Fiesta operates in the restaurant/food delivery domain, providing a digital platform for menu management and order processing.</p>
         
         <h3>User Roles</h3>
         <ul>
-            <li><strong>Customer</strong> — Browse products, search for dishes, place orders, view order history</li>
-            <li><strong>Administrator</strong> — Full CRUD operations on users, admins, products, and orders; access to analytics dashboard</li>
+            <li><strong>Customer (User)</strong>: Can register, log in, browse products, search for specific dishes, place orders, and view their order history</li>
+            <li><strong>Administrator (Admin)</strong>: Can manage the entire system including users, admins, products, and orders through a comprehensive dashboard</li>
+            <li><strong>OAuth2 Users</strong>: Customers can also register/login via Google OAuth2</li>
         </ul>
         
         <h3>Core Features</h3>
         <ul>
-            <li>Public product catalog with search functionality</li>
-            <li>Customer self-registration and login (email/password or Google OAuth2)</li>
-            <li>Order placement with automatic total calculation</li>
-            <li>Admin dashboard for managing all entities (users, products, orders, admins)</li>
-            <li>Session-based authentication with Spring Security route protection</li>
-            <li>Interactive API documentation via Swagger UI</li>
-            <li>H2 in-memory database for local development, PostgreSQL support for production</li>
+            <li><strong>Product Catalog</strong>: Browse and search Indian cuisine items (Biryani, Paneer dishes, Chicken dishes, Chinese fusion, North Indian specialties, desserts)</li>
+            <li><strong>Order Management</strong>: Place orders with automatic total calculation, view order history</li>
+            <li><strong>User Management</strong>: Self-registration, manual admin creation, profile updates</li>
+            <li><strong>Admin Dashboard</strong>: Centralized CRUD operations for all entities (users, admins, products, orders)</li>
+            <li><strong>Authentication</strong>: Dual-track login (admin vs customer) with optional Google OAuth2</li>
+            <li><strong>API Documentation</strong>: Interactive Swagger UI for all endpoints</li>
         </ul>
 
-        <h1>2. How to Start the Application</h1>
+        <h2>2. How to Start the Application</h2>
         
         <h3>Prerequisites</h3>
         <ul>
-            <li><strong>Java Development Kit (JDK) 21</strong> — Required runtime version</li>
-            <li><strong>Maven</strong> — Included via Maven Wrapper (<code>mvnw</code> / <code>mvnw.cmd</code>), no separate installation needed</li>
-            <li><strong>Docker</strong> (optional) — Only required for PostgreSQL deployment or containerized runs</li>
+            <li><strong>Java Development Kit (JDK) 21</strong> - Required runtime version</li>
+            <li><strong>Maven</strong> - Optional (Maven Wrapper included in project)</li>
+            <li><strong>Docker</strong> - Optional (only for PostgreSQL deployment)</li>
         </ul>
         
-        <h3>Running Locally (H2 Database)</h3>
-        <p>The default configuration uses an in-memory H2 database that resets on each restart.</p>
+        <h3>Running Locally with H2 (Default)</h3>
+        <p>The application uses an in-memory H2 database by default, requiring no external database setup.</p>
         
-        <p><strong>On Linux/macOS:</strong></p>
+        <h4>On Linux/macOS:</h4>
         <pre><code>./mvnw spring-boot:run</code></pre>
         
-        <p><strong>On Windows PowerShell:</strong></p>
+        <h4>On Windows PowerShell:</h4>
         <pre><code>.\mvnw.cmd spring-boot:run</code></pre>
         
-        <p>If <code>JAVA_HOME</code> is not set, configure it first:</p>
+        <p>If <code>JAVA_HOME</code> is not set on Windows:</p>
         <pre><code>$env:JAVA_HOME="C:\Program Files\Java\jdk-21.0.11"
 .\mvnw.cmd spring-boot:run</code></pre>
         
@@ -228,9 +253,9 @@
                 <th>Purpose</th>
             </tr>
             <tr>
-                <td>Application</td>
+                <td>Application Frontend</td>
                 <td><code>http://localhost:8080/</code></td>
-                <td>Main landing page</td>
+                <td>Main landing page and navigation</td>
             </tr>
             <tr>
                 <td>Swagger UI</td>
@@ -245,112 +270,186 @@
         </table>
         
         <h3>Default Credentials</h3>
-        <p>The application seeds a default admin account on first startup:</p>
-        <table>
-            <tr>
-                <th>Role</th>
-                <th>Email</th>
-                <th>Password</th>
-            </tr>
-            <tr>
-                <td>Admin</td>
-                <td><code>admin@foodfiesta.com</code></td>
-                <td><code>admin123</code></td>
-            </tr>
-        </table>
+        <div class="success">
+            <strong>Admin Account (seeded on startup):</strong><br>
+            Email: <code>admin@foodfiesta.com</code><br>
+            Password: <code>admin123</code>
+        </div>
         
-        <p><strong>H2 Console Connection:</strong></p>
-        <ul>
-            <li>JDBC URL: <code>jdbc:h2:mem:foodfiesta</code></li>
-            <li>Username: <code>sa</code></li>
-            <li>Password: <em>(leave blank)</em></li>
-        </ul>
+        <div class="info">
+            <strong>H2 Database Console:</strong><br>
+            JDBC URL: <code>jdbc:h2:mem:foodfiesta</code><br>
+            Username: <code>sa</code><br>
+            Password: <em>(leave blank)</em>
+        </div>
         
         <h3>Environment Variables</h3>
-        <p>No environment variables are required for local H2 development. For PostgreSQL deployment, see Section 5.</p>
+        <p>No environment variables are required for local H2 development. The following are only needed for PostgreSQL deployment:</p>
+        <ul>
+            <li><code>SPRING_DATASOURCE_URL</code> - PostgreSQL connection string</li>
+            <li><code>SPRING_DATASOURCE_USERNAME</code> - Database username</li>
+            <li><code>SPRING_DATASOURCE_PASSWORD</code> - Database password</li>
+        </ul>
+        
+        <h3>Optional: Google OAuth2 Setup</h3>
+        <p>To enable Google login, update <code>src/main/resources/application.properties</code>:</p>
+        <ol>
+            <li>Go to <a href="https://console.cloud.google.com/">Google Cloud Console</a></li>
+            <li>Create an OAuth 2.0 Client ID</li>
+            <li>Add authorized redirect URI: <code>http://localhost:8080/login/oauth2/code/google</code></li>
+            <li>Replace placeholders in <code>application.properties</code>:
+                <pre><code>spring.security.oauth2.client.registration.google.client-id=YOUR_CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_CLIENT_SECRET</code></pre>
+            </li>
+        </ol>
 
-        <h1>3. Application Architecture</h1>
+        <h2>3. Application Architecture</h2>
         
         <h3>Architectural Layers</h3>
-        <p>Food Fiesta follows a classic Spring Boot layered architecture:</p>
+        <p>Food Fiesta follows a classic Spring Boot layered architecture with some non-standard conventions:</p>
         
+        <h4>Controllers (Entry Points)</h4>
+        <p>Handle HTTP requests and route them to appropriate services. All controllers are annotated with <code>@Controller</code> and use Thymeleaf for server-side rendering.</p>
         <ul>
-            <li><strong>Controllers</strong> (<code>com.example.demo.controllers</code>) — HTTP request handlers, route definitions, session management</li>
-            <li><strong>Services</strong> (<code>com.example.demo.services</code>) — Business logic, validation, orchestration between repositories</li>
-            <li><strong>Repositories</strong> (<code>com.example.demo.repositories</code>) — Data access layer, extends <code>CrudRepository</code> or <code>JpaRepository</code></li>
-            <li><strong>Entities</strong> (<code>com.example.demo.entities</code>) — JPA entities mapping to database tables</li>
-            <li><strong>Config</strong> (<code>com.example.demo.config</code>) — Security configuration, data seeding, OpenAPI setup</li>
+            <li><code>HomeController</code> - Public pages (home, products, about, location, login, register)</li>
+            <li><code>AdminController</code> - Admin authentication, dashboard, and all CRUD operations</li>
+            <li><code>UserController</code> - User account management (add, update, delete, register)</li>
+            <li><code>ProductController</code> - Product CRUD operations</li>
+            <li><code>OrderController</code> - Currently empty (order logic is in AdminController)</li>
+            <li><code>OAuth2Controller</code> - Google OAuth2 callback handler</li>
+            <li><code>TestController</code> - Development/testing endpoints</li>
         </ul>
         
-        <h3>Authentication Mechanism</h3>
-        <p><strong>Dual-track session-based authentication:</strong></p>
+        <h4>Services (Business Logic)</h4>
+        <div class="warning">
+            <strong>⚠️ Non-Standard Annotation:</strong> All service classes use <code>@Component</code> instead of the conventional <code>@Service</code>. This is intentional and works correctly.
+        </div>
         <ul>
-            <li><strong>Spring Security</strong> handles route authorization only — it does NOT perform credential validation</li>
-            <li><strong>Manual credential validation</strong> is done in <code>AdminController</code>:
-                <ul>
-                    <li><code>AdminController.getAllData()</code> validates admin login via <code>AdminServices.validateAdminCredentials()</code></li>
-                    <li><code>AdminController.userLogin()</code> validates user login via <code>UserServices.validateLoginCredentials()</code></li>
-                </ul>
-            </li>
-            <li><strong>Session storage</strong>:
-                <ul>
-                    <li>Admin: <code>session.setAttribute("loggedInAdmin", email)</code> — stores email as <code>String</code></li>
-                    <li>User: <code>session.setAttribute("loggedInUser", user)</code> — stores full <code>User</code> JPA entity</li>
-                </ul>
-            </li>
-            <li><strong>Passwords are stored in plain text</strong> — <code>BCryptPasswordEncoder</code> bean exists in <code>SecurityConfig</code> but is not applied anywhere</li>
-            <li><strong>OAuth2 Google login</strong> creates a User with placeholder values: <code>upassword = "OAUTH_USER"</code>, <code>unumber = 0L</code></li>
-            <li><strong>CSRF is disabled</strong> globally in <code>SecurityConfig</code></li>
+            <li><code>UserServices</code> - User CRUD, authentication validation (loads all users for comparison ⚠️ not scalable)</li>
+            <li><code>AdminServices</code> - Admin CRUD, authentication validation, <strong>⚠️ bug in update() method</strong> (doesn't set ID before save)</li>
+            <li><code>ProductServices</code> - Product CRUD, search by name</li>
+            <li><code>OrderServices</code> - Order CRUD, fetch orders by user</li>
         </ul>
         
-        <h3>Data Model</h3>
+        <h4>Repositories (Data Access)</h4>
+        <p>All repositories extend <code>CrudRepository</code> (not <code>JpaRepository</code>), meaning <code>findAll()</code> returns <code>Iterable</code> and must be cast to <code>List</code>.</p>
+        <ul>
+            <li><code>UserRepository</code> - Custom query: <code>findUserByUemail(String email)</code></li>
+            <li><code>AdminRepository</code> - Custom query: <code>findByAdminEmail(String email)</code></li>
+            <li><code>ProductRepository</code> - Custom query: <code>findByPnameContainingIgnoreCase(String name)</code></li>
+            <li><code>OrderRepository</code> - Custom query: <code>findOrdersByUser(User user)</code></li>
+        </ul>
+        
+        <h4>Entities (Data Model)</h4>
         <table>
             <tr>
                 <th>Entity</th>
                 <th>Table Name</th>
-                <th>Key Fields</th>
-                <th>Relationships</th>
+                <th>ID Strategy</th>
+                <th>Notes</th>
             </tr>
             <tr>
                 <td><code>User</code></td>
                 <td><code>customer_info</code></td>
-                <td><code>u_id</code> (PK), <code>uemail</code>, <code>upassword</code>, <code>uname</code>, <code>unumber</code></td>
-                <td>One-to-Many with <code>Orders</code></td>
+                <td>IDENTITY</td>
+                <td>Field <code>u_id</code> uses underscore; getter is <code>getU_id()</code></td>
             </tr>
             <tr>
                 <td><code>Admin</code></td>
                 <td><code>admin</code></td>
-                <td><code>adminId</code> (PK), <code>adminEmail</code>, <code>adminPassword</code>, <code>adminName</code>, <code>adminNumber</code></td>
-                <td>None</td>
+                <td>IDENTITY</td>
+                <td>Passwords stored in plain text</td>
             </tr>
             <tr>
                 <td><code>Product</code></td>
                 <td><code>product_table</code></td>
-                <td><code>pid</code> (PK), <code>pname</code>, <code>pprice</code>, <code>pdescription</code></td>
-                <td>None</td>
+                <td>IDENTITY</td>
+                <td>Standard entity</td>
             </tr>
             <tr>
                 <td><code>Orders</code></td>
                 <td><code>order_info</code></td>
-                <td><code>oId</code> (PK), <code>oName</code>, <code>oPrice</code>, <code>oQuantity</code>, <code>totalAmmout</code>, <code>orderDate</code></td>
-                <td>Many-to-One with <code>User</code></td>
+                <td>AUTO</td>
+                <td><strong>⚠️ Field typo:</strong> <code>totalAmmout</code> (double 'm') - preserve this!</td>
             </tr>
         </table>
         
+        <h4>Relationships</h4>
+        <ul>
+            <li><code>User</code> ↔ <code>Orders</code>: One-to-Many (one user can have many orders)</li>
+            <li><code>Orders.user</code>: ManyToOne relationship with foreign key <code>user_u_id</code></li>
+        </ul>
+        
+        <h4>Configuration</h4>
+        <ul>
+            <li><code>SecurityConfig</code> - Spring Security configuration (CSRF disabled, route authorization, OAuth2 setup)</li>
+            <li><code>OpenApiConfig</code> - Swagger/OpenAPI documentation setup</li>
+            <li><code>DataLoader</code> - Seeds 5 sample products and 1 default admin on startup (guarded by <code>count() == 0</code>)</li>
+        </ul>
+        
+        <h4>Utilities</h4>
+        <ul>
+            <li><code>Logic</code> (in <code>count</code> package) - Static utility for order total calculation: <code>countTotal(price, quantity)</code></li>
+            <li><code>AdminLogin</code> and <code>UserLogin</code> (in <code>loginCredentials</code> package) - Plain DTOs for Thymeleaf form binding (not entities)</li>
+        </ul>
+        
+        <h3>Authentication Mechanism</h3>
         <div class="warning">
-            <strong>⚠️ Note:</strong> <code>Orders.totalAmmout</code> has an intentional typo (double "m") — this maps to the database column and must NOT be changed without a migration.
+            <strong>⚠️ Critical Security Note:</strong> Spring Security only guards routes. Actual authentication is manual and session-based.
         </div>
+        
+        <h4>How Authentication Works</h4>
+        <ol>
+            <li><strong>Admin Login</strong>:
+                <ul>
+                    <li>User submits credentials to <code>/adminLogin</code> (POST)</li>
+                    <li><code>AdminController.getAllData()</code> validates via <code>AdminServices.validateAdminCredentials()</code></li>
+                    <li>If valid, stores admin email as <code>String</code> in session: <code>session.setAttribute("loggedInAdmin", email)</code></li>
+                    <li>Redirects to <code>/admin/services</code></li>
+                </ul>
+            </li>
+            <li><strong>User Login</strong>:
+                <ul>
+                    <li>User submits credentials to <code>/userLogin</code> (POST)</li>
+                    <li><code>AdminController.userLogin()</code> validates via <code>UserServices.validateLoginCredentials()</code></li>
+                    <li>If valid, stores full <code>User</code> object in session: <code>session.setAttribute("loggedInUser", user)</code></li>
+                    <li>Redirects to <code>/dashboard</code></li>
+                </ul>
+            </li>
+            <li><strong>OAuth2 Login</strong>:
+                <ul>
+                    <li>Google redirects to <code>/oauth2/success</code></li>
+                    <li><code>OAuth2Controller</code> extracts email from OAuth2 principal</li>
+                    <li>Creates new user if not exists (password = <code>"OAUTH_USER"</code>, phone = <code>0L</code>)</li>
+                    <li>Stores <code>User</code> object in session</li>
+                    <li>Redirects to <code>/dashboard</code></li>
+                </ul>
+            </li>
+        </ol>
+        
+        <h4>Password Storage</h4>
+        <div class="warning">
+            <strong>⚠️ Security Gap:</strong> All passwords (admin and user) are stored in plain text. A <code>BCryptPasswordEncoder</code> bean exists in <code>SecurityConfig</code> but is not used anywhere in the codebase.
+        </div>
+        
+        <h4>Session Keys</h4>
+        <ul>
+            <li><code>"loggedInAdmin"</code> → <code>String</code> (admin email)</li>
+            <li><code>"loggedInUser"</code> → <code>User</code> (full JPA entity)</li>
+        </ul>
         
         <h3>Request Lifecycle</h3>
         <ol>
             <li><strong>Browser</strong> sends HTTP request (Thymeleaf form submission or direct navigation)</li>
-            <li><strong>Spring Security</strong> checks if the route requires authentication (see <code>SecurityConfig.securityFilterChain()</code>)</li>
-            <li><strong>Controller</strong> receives the request, validates session attributes if needed</li>
-            <li><strong>Service</strong> executes business logic, calls repositories</li>
-            <li><strong>Repository</strong> performs database operations via JPA/Hibernate</li>
-            <li><strong>Database</strong> (H2 or PostgreSQL) returns data</li>
-            <li><strong>Controller</strong> populates the model and returns a Thymeleaf template name or redirect</li>
-            <li><strong>Thymeleaf</strong> renders the HTML response</li>
+            <li><strong>Spring Security</strong> checks if route is public or requires authentication</li>
+            <li><strong>Controller</strong> receives request, validates session if needed</li>
+            <li><strong>Service</strong> executes business logic (validation, calculation)</li>
+            <li><strong>Repository</strong> performs database operations via Spring Data JPA</li>
+            <li><strong>H2/PostgreSQL</strong> executes SQL and returns data</li>
+            <li><strong>Service</strong> processes results</li>
+            <li><strong>Controller</strong> adds data to Model and returns Thymeleaf template name</li>
+            <li><strong>Thymeleaf</strong> renders HTML with data</li>
+            <li><strong>Browser</strong> displays the page</li>
         </ol>
         
         <h3>Architecture Diagram</h3>
@@ -364,144 +463,132 @@
                     <span class="chip chip-browser">CSS + JavaScript</span>
                 </div>
             </div>
-            
+
             <div class="arch-arrow">↓ <span>HTTP Request</span></div>
-            
+
             <div class="arch-layer layer-security">
                 <div class="arch-layer-title">🔒 Spring Security (route authorization only)</div>
                 <div class="arch-chips">
-                    <span class="chip chip-security chip-warn">⚠️ Plain-text passwords</span>
-                    <span class="chip chip-security">Session-based auth</span>
-                    <span class="chip chip-security">OAuth2 Google</span>
                     <span class="chip chip-security chip-warn">⚠️ CSRF disabled</span>
+                    <span class="chip chip-security">OAuth2 (Google)</span>
+                    <span class="chip chip-security chip-warn">⚠️ Manual session auth</span>
                 </div>
             </div>
-            
+
             <div class="arch-arrow">↓ <span>Authorized requests</span></div>
-            
+
             <div class="arch-layer layer-ctrl">
                 <div class="arch-layer-title">🎮 Controllers</div>
                 <div class="arch-chips">
-                    <span class="chip chip-ctrl">AdminController</span>
                     <span class="chip chip-ctrl">HomeController</span>
+                    <span class="chip chip-ctrl">AdminController</span>
                     <span class="chip chip-ctrl">UserController</span>
                     <span class="chip chip-ctrl">ProductController</span>
-                    <span class="chip chip-ctrl">OrderController</span>
+                    <span class="chip chip-ctrl">OrderController (empty stub)</span>
                     <span class="chip chip-ctrl">OAuth2Controller</span>
-                    <span class="chip chip-ctrl">TestController</span>
                 </div>
             </div>
-            
+
             <div class="arch-arrow">↓ <span>Service calls</span></div>
-            
+
             <div class="arch-layer layer-svc">
-                <div class="arch-layer-title">⚙️ Services (annotated @Component, not @Service)</div>
+                <div class="arch-layer-title">⚙️ Services (annotated with @Component, not @Service)</div>
                 <div class="arch-chips">
-                    <span class="chip chip-svc chip-warn">AdminServices ⚠️ (bug in update())</span>
-                    <span class="chip chip-svc chip-warn">UserServices ⚠️ (loads all users for login)</span>
+                    <span class="chip chip-svc">UserServices</span>
+                    <span class="chip chip-svc chip-warn">AdminServices ⚠️ bug in update()</span>
                     <span class="chip chip-svc">ProductServices</span>
                     <span class="chip chip-svc">OrderServices</span>
-                    <span class="chip chip-svc">Logic (static utility)</span>
                 </div>
             </div>
-            
+
             <div class="arch-arrow">↓ <span>JPA / Hibernate</span></div>
-            
+
             <div class="arch-layer layer-repo">
-                <div class="arch-layer-title">🗄️ Repositories (CrudRepository / JpaRepository)</div>
+                <div class="arch-layer-title">🗄️ Repositories (extend CrudRepository)</div>
                 <div class="arch-chips">
-                    <span class="chip chip-repo">AdminRepository</span>
                     <span class="chip chip-repo">UserRepository</span>
+                    <span class="chip chip-repo">AdminRepository</span>
                     <span class="chip chip-repo">ProductRepository</span>
-                    <span class="chip chip-repo">OrderRepository (JpaRepository)</span>
+                    <span class="chip chip-repo">OrderRepository</span>
                 </div>
             </div>
-            
+
             <div class="arch-arrow">↓ <span>SQL</span></div>
-            
+
             <div class="arch-layer layer-db">
                 <div class="arch-layer-title">💾 Database</div>
                 <div class="arch-chips">
-                    <span class="chip chip-db">H2 (dev) / PostgreSQL (prod)</span>
+                    <span class="chip chip-db">H2 (in-memory, dev)</span>
+                    <span class="chip chip-db">PostgreSQL (optional, prod)</span>
                     <span class="chip chip-db">customer_info ── User</span>
                     <span class="chip chip-db">admin ── Admin</span>
                     <span class="chip chip-db">product_table ── Product</span>
                     <span class="chip chip-db">order_info ── Orders</span>
                 </div>
             </div>
-            
-            <div class="arch-arrow">↕ <span>Session / State</span></div>
+
+            <div class="arch-arrow">↕ <span>Session State</span></div>
             
             <div class="arch-layer layer-session">
                 <div class="arch-layer-title">💡 HTTP Session</div>
                 <div class="arch-chips">
                     <span class="chip chip-session">"loggedInAdmin" → String (email)</span>
-                    <span class="chip chip-session chip-warn">"loggedInUser" → User entity ⚠️ (detached risk)</span>
+                    <span class="chip chip-session chip-warn">"loggedInUser" → User (JPA entity ⚠️)</span>
                 </div>
             </div>
         </div>
-        
-        <h3>Non-Obvious Patterns</h3>
-        <ul>
-            <li><strong>Services use <code>@Component</code> instead of <code>@Service</code></strong> — This is intentional and works correctly</li>
-            <li><strong>Repositories extend <code>CrudRepository</code></strong> (except <code>OrderRepository</code> which extends <code>JpaRepository</code>) — <code>findAll()</code> returns <code>Iterable</code>, always cast to <code>List</code></li>
-            <li><strong>Update operations use <code>@GetMapping</code></strong> instead of <code>@PutMapping</code> — This is the established pattern for all <code>updating*</code> routes</li>
-            <li><strong><code>Orders</code> uses <code>GenerationType.AUTO</code></strong> while all other entities use <code>IDENTITY</code> — Can cause sequence conflicts on PostgreSQL</li>
-            <li><strong><code>User.u_id</code> field uses underscore</strong> — Getter/setter are <code>getU_id()</code> / <code>setU_id()</code></li>
-            <li><strong><code>Logic.countTotal(price, quantity)</code></strong> in <code>com.example.demo.count</code> is the only calculation utility — Use it for order totals, do not inline multiplication</li>
-        </ul>
 
-        <h1>4. Architecture Diagram</h1>
-        <p>See the interactive flow diagram in Section 3 above. A simplified Markdown version is available in <code>docs/onboarding/architecture.md</code>.</p>
-
-        <h1>5. CI/CD & Deployment</h1>
+        <h2>4. CI/CD & Deployment</h2>
         
-        <h3>Continuous Integration — AWS CodeBuild</h3>
-        <p>The project uses AWS CodeBuild for automated builds, configured via <code>buildspec.yml</code>:</p>
-        
-        <h4>Pipeline Trigger</h4>
-        <ul>
-            <li>Triggered on push to the repository (exact branch configuration depends on AWS CodeBuild project settings)</li>
-        </ul>
+        <h3>Continuous Integration - AWS CodeBuild</h3>
+        <p>The project uses AWS CodeBuild for CI, configured in <code>buildspec.yml</code>.</p>
         
         <h4>Build Phases</h4>
-        <ol>
-            <li><strong>Install</strong> — Verifies Maven and Java versions</li>
-            <li><strong>Build</strong> — Runs <code>mvn clean package -DskipTests</code></li>
-            <li><strong>Post-build</strong> — Copies the JAR artifact to <code>output/</code> directory</li>
-        </ol>
+        <ul>
+            <li><strong>Install</strong>: Displays Maven and Java versions</li>
+            <li><strong>Build</strong>: Executes <code>mvn clean package -DskipTests</code></li>
+            <li><strong>Post-Build</strong>: Copies JAR to <code>output/</code> directory</li>
+        </ul>
         
         <h4>Artifacts Produced</h4>
         <ul>
-            <li><code>output/*.jar</code> — Packaged Spring Boot application</li>
-            <li><code>appspec.yml</code> — AWS CodeDeploy configuration (if present)</li>
-            <li><code>scripts/**/*</code> — Deployment scripts (if present)</li>
+            <li><code>output/*.jar</code> - Compiled Spring Boot application</li>
+            <li><code>appspec.yml</code> - AWS CodeDeploy configuration (if present)</li>
+            <li><code>scripts/**/*</code> - Deployment scripts (if present)</li>
         </ul>
         
         <div class="info">
-            <strong>ℹ️ Note:</strong> Tests are skipped in the CI build (<code>-DskipTests</code>). This is because tests require Spring context with valid OAuth2 credentials, which are not configured in the CI environment.
+            <strong>Note:</strong> Tests are skipped during CI build (<code>-DskipTests</code>). This is because tests require Spring context with valid OAuth2 credentials, which are placeholders in <code>application.properties</code>.
         </div>
         
-        <h3>Docker — Containerization</h3>
+        <h3>Docker</h3>
         
-        <h4>Dockerfile Structure</h4>
-        <p>The project uses a multi-stage Docker build:</p>
+        <h4>Dockerfile (Multi-Stage Build)</h4>
+        <p>The Dockerfile uses a two-stage build for optimal image size:</p>
         
-        <p><strong>Stage 1: Build</strong></p>
+        <table>
+            <tr>
+                <th>Stage</th>
+                <th>Base Image</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td>Build</td>
+                <td><code>eclipse-temurin:21-jdk-alpine</code></td>
+                <td>Compile application with Maven</td>
+            </tr>
+            <tr>
+                <td>Run</td>
+                <td><code>eclipse-temurin:21-jre-alpine</code></td>
+                <td>Minimal runtime environment</td>
+            </tr>
+        </table>
+        
+        <h4>Security Measures</h4>
         <ul>
-            <li>Base image: <code>eclipse-temurin:21-jdk-alpine</code></li>
-            <li>Copies Maven wrapper and <code>pom.xml</code></li>
-            <li>Downloads dependencies (cached layer)</li>
-            <li>Copies source code and builds with <code>./mvnw clean package -DskipTests</code></li>
-        </ul>
-        
-        <p><strong>Stage 2: Run</strong></p>
-        <ul>
-            <li>Base image: <code>eclipse-temurin:21-jre-alpine</code> (minimal runtime)</li>
-            <li>Creates non-root user <code>spring:spring</code> for security</li>
-            <li>Copies JAR from build stage</li>
-            <li>Exposes port <code>8080</code></li>
-            <li>Runs via <code>entrypoint.sh</code> script</li>
+            <li>Non-root user: Application runs as <code>spring:spring</code> user</li>
+            <li>Minimal runtime: JRE-only image (no JDK in production)</li>
+            <li>Alpine Linux: Smaller attack surface</li>
         </ul>
         
         <h4>Environment Variables (Dockerfile)</h4>
@@ -529,163 +616,183 @@
         </table>
         
         <h4>Docker Compose</h4>
-        <p>The <code>docker-compose.yml</code> file orchestrates two services:</p>
+        <p><code>docker-compose.yml</code> orchestrates two services:</p>
         
         <table>
             <tr>
                 <th>Service</th>
                 <th>Image</th>
                 <th>Ports</th>
-                <th>Dependencies</th>
+                <th>Notes</th>
             </tr>
             <tr>
                 <td><code>app</code></td>
                 <td>Built from Dockerfile</td>
-                <td><code>8080:8080</code></td>
+                <td>8080:8080</td>
                 <td>Waits for <code>db</code> health check</td>
             </tr>
             <tr>
                 <td><code>db</code></td>
                 <td><code>postgres:latest</code></td>
-                <td><code>5432:5432</code></td>
-                <td>None</td>
+                <td>5432:5432</td>
+                <td>Health check: <code>pg_isready -U postgres</code></td>
             </tr>
         </table>
         
-        <p><strong>PostgreSQL Configuration:</strong></p>
-        <ul>
-            <li>Database: <code>foodfiesta</code></li>
-            <li>Username: <code>postgres</code></li>
-            <li>Password: <code>password</code></li>
-            <li>Health check: <code>pg_isready -U postgres</code> every 10 seconds</li>
-        </ul>
-        
-        <h4>Running with Docker</h4>
-        <pre><code># Build and start both services
-docker compose up -d
-
-# Follow application logs
-docker compose logs -f app
-
-# Stop all services
-docker compose down</code></pre>
+        <h4>Entrypoint Script</h4>
+        <p><code>entrypoint.sh</code> is a simple startup script that launches the JAR:</p>
+        <pre><code>#!/bin/sh
+echo "🚀 Starting Food Fiesta Application..."
+exec java -jar app.jar</code></pre>
         
         <h3>Environment Variables for Production</h3>
         <table>
             <tr>
                 <th>Variable</th>
                 <th>Required</th>
-                <th>Default (Dev)</th>
                 <th>Purpose</th>
+                <th>Default (Dev)</th>
             </tr>
             <tr>
                 <td><code>SPRING_DATASOURCE_URL</code></td>
-                <td>Yes (prod)</td>
-                <td><code>jdbc:h2:mem:foodfiesta</code></td>
+                <td>Yes (if using PostgreSQL)</td>
                 <td>Database connection string</td>
+                <td><code>jdbc:h2:mem:foodfiesta</code></td>
             </tr>
             <tr>
                 <td><code>SPRING_DATASOURCE_USERNAME</code></td>
-                <td>Yes (prod)</td>
-                <td><code>sa</code></td>
+                <td>Yes (if using PostgreSQL)</td>
                 <td>Database username</td>
+                <td><code>sa</code></td>
             </tr>
             <tr>
                 <td><code>SPRING_DATASOURCE_PASSWORD</code></td>
-                <td>Yes (prod)</td>
-                <td><em>(empty)</em></td>
+                <td>Yes (if using PostgreSQL)</td>
                 <td>Database password</td>
+                <td><em>(empty)</em></td>
             </tr>
             <tr>
-                <td><code>SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID</code></td>
-                <td>No</td>
+                <td><code>spring.security.oauth2.client.registration.google.client-id</code></td>
+                <td>No (optional OAuth2)</td>
+                <td>Google OAuth2 client ID</td>
                 <td><code>YOUR_CLIENT_ID</code></td>
-                <td>Google OAuth2 client ID (optional feature)</td>
             </tr>
             <tr>
-                <td><code>SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET</code></td>
-                <td>No</td>
+                <td><code>spring.security.oauth2.client.registration.google.client-secret</code></td>
+                <td>No (optional OAuth2)</td>
+                <td>Google OAuth2 client secret</td>
                 <td><code>YOUR_CLIENT_SECRET</code></td>
-                <td>Google OAuth2 client secret (optional feature)</td>
             </tr>
         </table>
         
         <h3>Health Check Endpoint</h3>
-        <p>No dedicated health check endpoint is currently implemented. The application can be monitored via:</p>
-        <ul>
-            <li>HTTP GET to <code>/</code> or <code>/home</code> (should return 200 OK)</li>
-            <li>Spring Boot Actuator endpoints (if enabled in future)</li>
-        </ul>
+        <p>No dedicated health check endpoint is currently implemented. Consider adding Spring Boot Actuator for production monitoring:</p>
+        <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+        <p>This would enable <code>/actuator/health</code> endpoint for container health checks.</p>
 
-        <h1>6. Project Health & Technical Debt Tracking</h1>
+        <h2>5. Project Health & Technical Debt Tracking</h2>
         
-        <p>A comprehensive technical debt audit will be automatically run at the end of this onboarding process. The audit analyzes the codebase for security vulnerabilities, architectural issues, code quality problems, and dependency risks.</p>
+        <p>To help you monitor the project's health over time, a technical debt audit will be automatically run at the end of this onboarding process. This audit provides a comprehensive analysis of code quality, security vulnerabilities, architectural issues, and dependency risks.</p>
         
         <h3>Audit Deliverables</h3>
-        <p>Once the audit completes, the following reports will be available in the <code>docs/audit/</code> folder:</p>
+        <p>The audit generates three files in the <code>docs/audit/</code> directory:</p>
         <ul>
-            <li><code>dette_technique.html</code> — Interactive HTML report with KPI dashboard and prioritized backlog</li>
-            <li><code>dette_technique.pdf</code> — PDF version with debt visualization chart</li>
-            <li><code>dette_technique_baseline.json</code> — Temporal tracking baseline for future comparisons</li>
+            <li><code>dette_technique.html</code> - Interactive HTML report with KPI dashboard and prioritized backlog</li>
+            <li><code>dette_technique.pdf</code> - PDF version with debt visualization chart</li>
+            <li><code>dette_technique_baseline.json</code> - Temporal tracking baseline for future comparisons</li>
         </ul>
         
-        <h3>Re-running the Audit</h3>
-        <p>To regenerate the audit at any time and track improvements or regressions:</p>
-        
-        <div class="info">
-            Type <strong>"lance un audit de dette technique"</strong> in a new Bob conversation on this project to regenerate the full audit report with temporal delta (improvement or regression vs. the previous baseline).
-        </div>
+        <h3>Re-Running the Audit</h3>
+        <p>You can regenerate the audit at any time to track improvements or regressions:</p>
+        <blockquote>
+            Type <strong>"lance un audit de dette technique"</strong> in a new Bob conversation on this project to regenerate the full audit report with temporal delta (improvement or regression vs. the previous baseline)
+        </blockquote>
         
         <h3>Temporal Tracking</h3>
-        <p>The baseline JSON file (<code>docs/audit/dette_technique_baseline.json</code>) stores a reference snapshot of the project's technical debt. When you re-run the audit, it automatically compares against this baseline and shows:</p>
+        <p>The baseline JSON file (<code>docs/audit/dette_technique_baseline.json</code>) stores a reference snapshot of the project's health metrics. When you re-run the audit, it automatically compares against this baseline and shows:</p>
         <ul>
-            <li>Which issues have been fixed (✅ improvements)</li>
-            <li>Which new issues have been introduced (⚠️ regressions)</li>
-            <li>Overall debt trend (increasing or decreasing)</li>
+            <li>Which metrics have improved (e.g., reduced security vulnerabilities)</li>
+            <li>Which metrics have regressed (e.g., increased code complexity)</li>
+            <li>Net change in technical debt (days and euros)</li>
         </ul>
         
-        <p>This enables continuous monitoring of code health over time and helps prioritize refactoring efforts.</p>
+        <div class="info">
+            <strong>Best Practice:</strong> Run the audit before and after major refactoring efforts to quantify the impact of your improvements.
+        </div>
 
-        <h1>7. Known Gotchas & Contribution Guide</h1>
+        <h2>6. Known Gotchas & Contribution Guide</h2>
         
         <h3>Known Gotchas</h3>
-        <p>These are non-obvious patterns that would trip up a new developer. <strong>Do not "fix" these without team discussion:</strong></p>
-        
         <div class="warning">
-            <strong>⚠️ Intentional Typo:</strong> <code>Orders.totalAmmout</code> has a double "m" — this maps to the database column name. Changing it will break JPA column mapping.
+            <strong>⚠️ Read this section carefully before making any changes!</strong>
         </div>
         
-        <div class="warning">
-            <strong>⚠️ Non-Standard Annotation:</strong> All service classes use <code>@Component</code> instead of <code>@Service</code>. This is intentional and works correctly. Do not change it.
-        </div>
+        <h4>1. Intentional Typo in Orders Entity</h4>
+        <p><strong>Field:</strong> <code>Orders.totalAmmout</code> (note the double 'm')</p>
+        <p><strong>Why it exists:</strong> This field maps to a database column. Changing the spelling would break JPA column mapping.</p>
+        <p><strong>Action:</strong> <strong>Never "fix" this typo.</strong> Use <code>getTotalAmmout()</code> and <code>setTotalAmmout()</code> as-is.</p>
         
-        <div class="warning">
-            <strong>⚠️ Unsafe Pattern:</strong> <code>AdminServices.update()</code> and <code>ProductServices.updateproduct()</code> call <code>Optional.get()</code> without checking <code>isPresent()</code>. This throws <code>NoSuchElementException</code> if the ID doesn't exist. This is a known bug but not yet fixed.
-        </div>
+        <h4>2. Services Use @Component Instead of @Service</h4>
+        <p><strong>Classes:</strong> <code>UserServices</code>, <code>AdminServices</code>, <code>ProductServices</code>, <code>OrderServices</code></p>
+        <p><strong>Why it exists:</strong> This is an intentional architectural choice. Both annotations work for Spring bean registration.</p>
+        <p><strong>Action:</strong> Do not change <code>@Component</code> to <code>@Service</code>. Maintain consistency with existing code.</p>
         
-        <div class="warning">
-            <strong>⚠️ Wrong HTTP Verb:</strong> Update operations use <code>@GetMapping</code> instead of <code>@PutMapping</code> or <code>@PostMapping</code>. This is the established pattern for all <code>updating*</code> routes. Do not change it without updating all Thymeleaf forms.
-        </div>
+        <h4>3. Unsafe Optional.get() Calls</h4>
+        <p><strong>Pattern:</strong> <code>Optional&lt;User&gt; optional = repository.findById(id); User user = optional.get();</code></p>
+        <p><strong>Risk:</strong> Throws <code>NoSuchElementException</code> if ID doesn't exist.</p>
+        <p><strong>Action:</strong> When adding new code, use <code>optional.orElseThrow()</code> or <code>optional.orElse(null)</code> with proper null checks.</p>
         
-        <div class="warning">
-            <strong>⚠️ Hardcoded Credentials:</strong> Default admin password is <code>admin123</code> (seeded in <code>DataLoader</code>). This is for local development only. Do not change it without updating team documentation.
-        </div>
+        <h4>4. Update Operations Use @GetMapping</h4>
+        <p><strong>Routes:</strong> <code>/updatingAdmin/{id}</code>, <code>/updatingProduct/{productId}</code>, <code>/updatingUser/{id}</code></p>
+        <p><strong>Why it exists:</strong> This is the established pattern in the codebase (not RESTful, but intentional).</p>
+        <p><strong>Action:</strong> Follow the existing pattern for consistency. Do not change to <code>@PutMapping</code> without team discussion.</p>
         
-        <div class="warning">
-            <strong>⚠️ Session Storage:</strong> <code>session.setAttribute("loggedInUser", user)</code> stores a full JPA entity. If the session object becomes detached from the Hibernate session, lazy-loaded fields (<code>orders</code>) will throw <code>LazyInitializationException</code>.
-        </div>
+        <h4>5. AdminServices.update() Bug</h4>
+        <p><strong>Issue:</strong> The method iterates all admins to find a match but calls <code>save(admin)</code> without setting the ID on the passed-in admin object.</p>
+        <pre><code>public void update(Admin admin, int id) {
+    for (Admin ad : getAll()) {
+        if(ad.getAdminId()==id) {
+            this.adminRepository.save(admin); // ⚠️ admin.adminId is not set!
+        }
+    }
+}</code></pre>
+        <p><strong>Risk:</strong> The saved record may get a new ID instead of updating the existing one.</p>
+        <p><strong>Action:</strong> If you need to fix this, add <code>admin.setAdminId(id);</code> before the save call.</p>
         
-        <div class="warning">
-            <strong>⚠️ Plain-Text Passwords:</strong> Both admin and user passwords are stored in plain text. <code>BCryptPasswordEncoder</code> bean exists but is not applied anywhere in the current codebase.
-        </div>
+        <h4>6. Passwords Stored in Plain Text</h4>
+        <p><strong>Issue:</strong> Both admin and user passwords are stored without hashing.</p>
+        <p><strong>Why it exists:</strong> A <code>BCryptPasswordEncoder</code> bean exists but is not wired to any authentication logic.</p>
+        <p><strong>Action:</strong> Do not change password storage without migrating existing data or handling both formats during transition.</p>
         
-        <div class="warning">
-            <strong>⚠️ Scalability Issue:</strong> <code>UserServices.validateLoginCredentials()</code> loads all users from the database for comparison. This is not scalable. Should be replaced with a <code>findUserByUemailAndUpassword</code> query method.
-        </div>
+        <h4>7. Session Stores Full JPA Entity</h4>
+        <p><strong>Pattern:</strong> <code>session.setAttribute("loggedInUser", user)</code> stores a full <code>User</code> object.</p>
+        <p><strong>Risk:</strong> If the session object becomes detached from the Hibernate session, lazy-loaded fields (like <code>orders</code>) will throw <code>LazyInitializationException</code>.</p>
+        <p><strong>Action:</strong> Be cautious when accessing <code>user.getOrders()</code> from session. Consider eager fetching or re-attaching the entity.</p>
         
-        <div class="warning">
-            <strong>⚠️ No Transactions:</strong> No <code>@Transactional</code> annotations anywhere. All service methods run without explicit transaction boundaries. Complex multi-save operations are at risk of partial commits.
-        </div>
+        <h4>8. UserServices.validateLoginCredentials() Loads All Users</h4>
+        <p><strong>Issue:</strong> The method loads all users into memory and iterates to find a match.</p>
+        <p><strong>Risk:</strong> Not scalable for large user bases.</p>
+        <p><strong>Action:</strong> Before adding significant user load, replace with a custom query method like <code>findUserByUemailAndUpassword(String email, String password)</code>.</p>
+        
+        <h4>9. CrudRepository Returns Iterable, Not List</h4>
+        <p><strong>Pattern:</strong> All repositories extend <code>CrudRepository</code>, so <code>findAll()</code> returns <code>Iterable&lt;T&gt;</code>.</p>
+        <p><strong>Action:</strong> Always cast to <code>List</code>: <code>List&lt;User&gt; users = (List&lt;User&gt;) repository.findAll();</code></p>
+        
+        <h4>10. Orders Uses GenerationType.AUTO</h4>
+        <p><strong>Issue:</strong> <code>Orders</code> uses <code>GenerationType.AUTO</code> while all other entities use <code>IDENTITY</code>.</p>
+        <p><strong>Risk:</strong> Can cause sequence table conflicts when switching to PostgreSQL.</p>
+        <p><strong>Action:</strong> Normalize to <code>IDENTITY</code> before production migration if using PostgreSQL.</p>
+        
+        <h4>11. Default Admin Credentials</h4>
+        <p><strong>Credentials:</strong> <code>admin@foodfiesta.com</code> / <code>admin123</code></p>
+        <p><strong>Action:</strong> Do not change these without updating the team. They are seeded on every fresh startup.</p>
+        
+        <h4>12. H2 Database is In-Memory</h4>
+        <p><strong>Behavior:</strong> All data is lost when the application stops.</p>
+        <p><strong>Action:</strong> Use PostgreSQL (via Docker Compose) if you need persistent data during development.</p>
         
         <h3>Contribution Guide</h3>
         
@@ -694,47 +801,51 @@ docker compose down</code></pre>
         <p>On Windows:</p>
         <pre><code>.\mvnw.cmd test</code></pre>
         
-        <div class="info">
-            <strong>ℹ️ Test Pass Rate:</strong> All existing tests must pass before pushing. Currently, there is only one test file (<code>FoodFrenzyApplicationTests</code>) that checks if the Spring context loads.
+        <div class="warning">
+            <strong>⚠️ Test Requirement:</strong> All existing tests must pass before pushing. Currently, only one test exists (<code>FoodFrenzyApplicationTests</code>) which checks that the Spring context loads.
         </div>
         
         <h4>Branching Convention</h4>
-        <p>The project does not enforce a specific branching strategy in the CI configuration. Follow your team's established Git workflow (e.g., feature branches merged to <code>main</code> via pull request, or direct push to <code>main</code>).</p>
+        <p>Based on the project structure, the following convention is recommended:</p>
+        <ul>
+            <li>Main branch: <code>main</code></li>
+            <li>Feature branches: <code>feature/description</code></li>
+            <li>Bugfix branches: <code>bugfix/description</code></li>
+            <li>Merge via Pull Request (PR) with code review</li>
+        </ul>
         
         <h4>Running the App Before Pushing</h4>
         <pre><code>./mvnw spring-boot:run</code></pre>
         <p>Verify that:</p>
         <ul>
-            <li>The application starts without errors</li>
+            <li>Application starts without errors</li>
             <li>You can access <code>http://localhost:8080/</code></li>
             <li>Login functionality works (admin and user)</li>
+            <li>Your changes work as expected</li>
         </ul>
         
-        <h4>CI Checks</h4>
-        <p>On push, AWS CodeBuild will automatically:</p>
+        <h4>CI Checks (AWS CodeBuild)</h4>
+        <p>When you push, AWS CodeBuild will automatically:</p>
         <ul>
             <li>Verify Maven and Java versions</li>
             <li>Run <code>mvn clean package -DskipTests</code></li>
-            <li>Produce a JAR artifact in <code>output/</code></li>
+            <li>Produce a JAR artifact</li>
         </ul>
         
-        <div class="success">
-            <strong>✅ Testing Reminder:</strong> If you add a new service method, add a matching test in the corresponding <code>*Test.java</code> file (e.g., <code>AdminServicesTest</code>, <code>UserServicesTest</code>).
+        <h4>Adding New Service Methods</h4>
+        <div class="info">
+            <strong>Reminder:</strong> If you add a new service method, add a matching test in the corresponding <code>*Test.java</code> file (even if it's just a basic smoke test).
         </div>
         
         <h4>Code Style</h4>
         <ul>
             <li>Follow existing naming conventions (e.g., <code>u_id</code>, <code>totalAmmout</code>)</li>
-            <li>Use <code>@Component</code> for service classes (not <code>@Service</code>)</li>
+            <li>Use <code>@Component</code> for services (not <code>@Service</code>)</li>
+            <li>Add Swagger annotations to new controller methods: <code>@Operation(summary="...", description="...")</code></li>
             <li>Cast <code>findAll()</code> results to <code>List</code> explicitly</li>
-            <li>Use <code>Logic.countTotal(price, quantity)</code> for order calculations</li>
-            <li>Add Swagger annotations (<code>@Operation</code>, <code>@Tag</code>) to all new controller methods</li>
+            <li>Use <code>Logic.countTotal()</code> for order calculations (never inline price × quantity)</li>
         </ul>
 
-        <div class="cover" style="margin-top: 60px; border-top: 3px solid #4299e1; border-bottom: none;">
-            <p style="font-size: 14px; color: #718096;">End of Developer Onboarding Guide</p>
-            <p style="font-size: 12px; color: #a0aec0; margin-top: 10px;">For questions or updates, refer to the project README or contact the team lead.</p>
-        </div>
     </div>
 </body>
 </html>
