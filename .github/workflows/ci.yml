@@ -25,7 +25,7 @@ jobs:
           cache: maven
 
       - name: Make Maven wrapper executable
-        run: chmod +x mvnw
+        run: chmod +x watsonx-hive-minders/Food-Fiesta/mvnw
 
       - name: Build and test
-        run: ./mvnw test
+        run: cd watsonx-hive-minders/Food-Fiesta && ./mvnw test
