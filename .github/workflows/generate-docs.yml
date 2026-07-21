@@ -9,9 +9,15 @@ on:
       - 'watsonx-hive-minders/Food-Fiesta/pom.xml'
       - 'watsonx-hive-minders/Food-Fiesta/README.md'
       - 'watsonx-hive-minders/Food-Fiesta/Dockerfile'
+      - 'watsonx-hive-minders/Food-Fiesta/docker-compose.yml'
       - 'watsonx-hive-minders/Food-Fiesta/.bob/skills/**'
       - 'watsonx-hive-minders/Food-Fiesta/src/main/resources/application.properties'
   workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual trigger'
+        required: false
+        default: 'Manual refresh of docs'
 
 jobs:
   generate-docs:
@@ -19,16 +25,33 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write               # Nécessaire pour le git push final
+      contents: write
 
     steps:
-      # 1. Récupérer le code
+      # 1. Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. Installer Bob Shell — --pm npm évite le prompt interactif de sélection du package manager
+      # 2. Log run summary
+      - name: Log run summary
+        run: |
+          echo "## Bob Skills Doc Generation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Author:** ${{ github.event.head_commit.author.name || 'manual' }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Message:** ${{ github.event.head_commit.message || github.event.inputs.reason }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Changed source files" >> $GITHUB_STEP_SUMMARY
+          git diff --name-only HEAD~1 HEAD 2>/dev/null \
+            | grep -E '^watsonx-hive-minders/Food-Fiesta/(src|pom\.xml|Dockerfile|docker-compose\.yml|README\.md)' \
+            | head -20 \
+            | sed 's/^/- /' >> $GITHUB_STEP_SUMMARY \
+            || echo "- (manual trigger — no diff available)" >> $GITHUB_STEP_SUMMARY
+
+      # 3. Installer Bob Shell — --pm npm évite le prompt interactif de sélection du package manager
       - name: Install Bob Shell
         run: |
           curl -fsSL https://bob.ibm.com/download/bobshell.sh | bash -s -- --pm npm
