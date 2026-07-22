@@ -1,0 +1,41 @@
+Project Name: Buddy — Food Fiesta Onboarding Agent (Hive Minders 2026)
+
+What we want to build:
+An AI-powered onboarding assistant (Buddy) built on IBM Consulting Assistants (ICA) that connects to a GitHub repository and guides new developers through project setup, architecture, technical debt, and contribution practices using live, auto-generated documentation.
+
+Problem it solves:
+New developers joining a project waste days reading outdated documentation, exploring unfamiliar codebases, and asking colleagues basic questions. Buddy provides instant, accurate, and always up-to-date answers by fetching documentation directly from the live repository.
+
+Target users:
+New developers and technical consultants joining the Food Fiesta project team. Also reusable as a template for any IBM consulting project onboarding scenario.
+
+Core features:
+- Answers questions about project architecture, tech stack, local setup, CI/CD, and contribution practices
+- Fetches live documentation from GitHub (architecture.md, devOnboarding.html, dette_technique_baseline.json, AGENTS.md)
+- Automatically warns when documentation is older than 30 days
+- Surfaces technical debt and security findings from automated audit reports
+- Uses GitHub Integration Suite tool for read-only repository access
+
+Data involved:
+Source code (Java/Spring Boot), configuration files (application.properties, pom.xml), CI/CD workflow files, auto-generated documentation (HTML, Markdown, JSON). No personal data, no customer data, no production data.
+
+Hosting / platform:
+IBM Consulting Assistants (ICA) — IBM Cloud. GitHub repository hosted on GitHub.com (public). CI/CD via GitHub Actions.
+
+Tech stack:
+Java 21, Spring Boot 3.4.2, Thymeleaf SSR, Spring Security, Google OAuth2, H2 (dev) / PostgreSQL (prod), Maven, GitHub Actions, Bob Shell (IBM AI CLI), IBM Bob IDE skills.
+
+User actions:
+Developers ask natural language questions about the project. The agent fetches relevant documentation from GitHub, summarizes it, and provides actionable answers. No write operations are performed.
+
+Business value:
+Reduces onboarding time from days to hours. Keeps documentation always in sync with the codebase via automated CI generation. Exposes technical debt and security risks to every new developer from day one.
+
+Security / compliance:
+IBMid/SSO authentication on ICA. Read-only GitHub access. API keys stored as encrypted secrets. No credentials exposed. Automated security audit (audit-dette-technique Bob skill) runs on every push to main. Known risks: plain-text passwords in application layer, CSRF disabled, no Maven CVE scan — all flagged in audit reports.
+
+Success metrics:
+New developer completes local setup within 1 hour using only Buddy. All documentation regenerated automatically within 15 minutes of a code push. Zero hallucinated technical information in agent responses.
+
+Future plans:
+Deploy Buddy on multiple IBM consulting project repositories using the 6-line configuration block. Add proactive alerts when new critical findings are detected in the audit baseline.
